@@ -1,3 +1,3 @@
 export function NoteFilter({ filterBy, setFilterBy }) {
-    return <div>note filter</div>
+    return <div className="note-filter">*FILTER PLACEHOLDER*</div>
 }

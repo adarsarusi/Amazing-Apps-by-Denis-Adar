@@ -10,7 +10,8 @@ export const noteService = {
     query,
     get,
     remove,
-    save
+    save,
+    getEmptyNote
 }
 
 function query(filterBy = {}) {
@@ -19,10 +20,6 @@ function query(filterBy = {}) {
             if (filterBy.txt) {
                 const regExp = new RegExp(filterBy.txt, 'i')
                 notes = notes.filter(note => regExp.test(note.vendor))
-            }
-
-            if (filterBy.minSpeed) {
-                notes = notes.filter(note => note.maxSpeed >= filterBy.minSpeed)
             }
 
             return notes
@@ -45,7 +42,18 @@ function save(note) {
     }
 }
 
-// function getEmptyNote(vendor = '', maxSpeed = '') {
-//     return { vendor, maxSpeed }
-// }
+function getEmptyNote(title = '', txt = '') {
+    return {
+        createdAt: Date.now(),
+        type: 'NoteTxt',
+        isPinned: false,
+        style: {
+            backgroundColor: '#FFFF88'
+        },
+        info: {
+            title,
+            txt
+        }
+    }
+}
 

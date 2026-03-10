@@ -1,0 +1,44 @@
+.note-form {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    margin-block-start: 5px;
+
+    >.note-inputs {
+        display: flex;
+        flex-direction: column;
+
+        width: 60vw;
+        border: 1px solid grey;
+        border-radius: 10px;
+        overflow: hidden;
+
+        >input {
+            padding: 8px;
+            border: none;
+            outline: none;
+            background: transparent;
+        }
+    }
+
+    >.note-controls{
+        margin-block-start: 5px;
+
+        >.save-btn{
+            border: 1px solid grey;
+            border-radius: 5px;
+            padding: 5px;
+
+            background-color: transparent;
+
+            cursor: pointer;
+
+            &:hover{
+                border-color: rgb(28, 164, 226);
+                color:rgb(28, 164, 226);
+            }
+        }
+    }
+}
