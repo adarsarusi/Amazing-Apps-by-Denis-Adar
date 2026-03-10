@@ -9,6 +9,8 @@ export const utilService = {
   loadFromStorage,
   saveToStorage,
   toCap,
+  makeEmail,
+  makeDate,
 }
 
 function saveToStorage(key, val) {
@@ -169,4 +171,34 @@ function getMonthName(date) {
 
 function toCap(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+
+function makeEmail() {
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
+  const domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'example.com', 'test.org']
+
+  const usernameLength = Math.floor(Math.random() * 11) + 5
+  let username = ''
+
+  for (let i = 0; i < usernameLength; i++) {
+    username += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+  const randomDomain = domains[Math.floor(Math.random() * domains.length)]
+
+  return `${username}@${randomDomain}`
+}
+
+function makeDate() {
+  const now = new Date()
+  const oneYearAgo = new Date()
+
+  oneYearAgo.setFullYear(now.getFullYear() - 1)
+
+  const startMs = oneYearAgo.getTime()
+  const endMs = now.getTime()
+
+  const randomMs = startMs + Math.random() * (endMs - startMs)
+
+  return new Date(randomMs)
 }
