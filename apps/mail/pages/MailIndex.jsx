@@ -1,25 +1,22 @@
 const { useState, useEffect } = React
 const { Link } = ReactRouterDOM
 
-import { utilService } from "../../../services/util.service.js"
-import { mailService } from "../services/mail.service"
+import { mailService } from '../services/mail.service.js'
+import { MailList } from '../cmps/MailList.jsx'
 
 export function MailIndex() {
+  const [mails, setMails] = useState(null)
+  const [filterBy, setFilterBy] = useState(mailService.getDefaultFilters())
 
-    const [mails, setMails] = useState()
-    const [filterBy, setFilterBy] = useState(mailService.getDefaultFilters())
+  useEffect(() => {
+    loadMails()
+  }, [filterBy])
 
-    useEffect(() => {
-        loadMails()
-    }, [filterBy])
+  function loadMails() {
+    mailService.query(filterBy).then(setMails)
+  }
 
-    function loadMails() {
-        return mailService.query(filterBy)
-            .then(setMails)
-    }
-
-    
-
-    return <section className="container">Mail app</section>
+  if (!mails) return <p>No messages matched your search. Try using search options such as sender, date, size and more.</p>
+  console.log(mails)
+  return <MailList mails={mails} />
 }
-

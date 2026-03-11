@@ -1,13 +1,23 @@
-
+/* BASE */
 @import './basics/vars.css';
 @import './basics/base.css';
 @import './basics/helpers.css';
 @import './basics/layout.css';
+@import './basics/reset.css';
 
+/* GLOBAL PAGE */
 @import './cmps/home.css';
-@import './cmps/UserMsg.css';
-@import './cmps/AppHeader.css';
 
-@import './apps/note/NoteIndex.css';
+/* GLOBAL COMPS */
+@import './cmps/AppHeader.css';
+@import './cmps/UserMsg.css';
+
+/* PAGES ---- mail--- */
 @import './apps/mail/MailIndex.css';
 @import './apps/mail/MailList.css';
+@import './apps/mail/MailPreview.css';
+/* COMPS ---- mail */
+
+/* PAGES ---- notes ---*/
+@import './apps/note/NoteIndex.css';
+/* COMPS ---- notes */

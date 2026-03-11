@@ -9,7 +9,7 @@ export const utilService = {
   loadFromStorage,
   saveToStorage,
   toCap,
-  makeEmail,
+  makeRandomUsers,
   makeDate,
 }
 
@@ -24,107 +24,54 @@ function loadFromStorage(key) {
 
 function makeId(length = 6) {
   var txt = ''
-  const possible =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
   for (var i = 0; i < length; i++) {
     txt += possible.charAt(Math.floor(Math.random() * possible.length))
   }
-
   return txt
 }
 
-function makeLorem(wordCount = 100) {
+function makeLorem(wordCount = 100, includeDot = true) {
   const words = [
-    'the',
-    'sky',
-    'above',
-    'the',
-    'port',
-    'was',
-    'the',
-    'color',
-    'of',
-    'nature',
-    'tuned',
-    'to',
-    'a',
-    'live',
-    'channel',
-    'all',
-    'this',
-    'happened',
-    'more',
-    'or',
-    'less',
-    'I',
-    'had',
-    'the',
-    'story',
-    'bit',
-    'by',
-    'bit',
-    'from',
-    'various',
-    'people',
-    'and',
-    'as',
-    'generally',
-    'happens',
-    'in',
-    'such',
-    'cases',
-    'each',
-    'time',
-    'it',
-    'was',
-    'a',
-    'different',
-    'story',
-    'a',
-    'pleasure',
-    'to',
-    'burn',
-    'it',
-    'was',
-    'a',
-    'bright',
-    'cold',
-    'day',
-    'in',
-    'April',
-    'and',
-    'the',
-    'clocks',
-    'were',
-    'striking',
-    'thirteen',
-  ]
+    'the', 'sky', 'above', 'port', 'was', 'color', 'of', 'nature', 'tuned',
+    'to', 'a', 'live', 'channel', 'all', 'this', 'happened', 'more', 'or',
+    'less', 'I', 'had', 'story', 'bit', 'by', 'from', 'various', 'people',
+    'and', 'as', 'generally', 'happens', 'in', 'such', 'cases', 'each',
+    'time', 'it', 'different', 'pleasure', 'burn', 'bright', 'cold', 'day',
+    'April', 'clocks', 'were', 'striking', 'thirteen'
+  ];
 
-  let remaining = wordCount
-  let result = []
+  let remaining = wordCount;
+  let paragraphs = [];
+  let currentParagraph = [];
 
   while (remaining > 0) {
-    let sentenceLength = Math.min(remaining, Math.floor(Math.random() * 11) + 4)
-    let sentence = []
+    let sentenceLength = Math.min(remaining, Math.floor(Math.random() * 11) + 4);
+    let sentenceWords = [];
 
     for (let i = 0; i < sentenceLength; i++) {
-      sentence.push(words[Math.floor(Math.random() * words.length)])
+      sentenceWords.push(words[Math.floor(Math.random() * words.length)]);
     }
 
-    let sentenceStr = sentence.join(' ')
-    sentenceStr =
-      sentenceStr.charAt(0).toUpperCase() + sentenceStr.slice(1) + '.'
+    let sentenceStr = sentenceWords.join(' ');
+    let punctuation = includeDot ? '.' : '';
+    sentenceStr = sentenceStr.charAt(0).toUpperCase() + sentenceStr.slice(1) + punctuation;
 
-    result.push(sentenceStr)
-    remaining -= sentenceLength
+    currentParagraph.push(sentenceStr);
+    remaining -= sentenceLength;
 
     if (Math.random() > 0.8 && remaining > 0) {
-      result.push('\n\n')
+      paragraphs.push(currentParagraph.join(' '));
+      currentParagraph = [];
     }
   }
 
-  return result.join(' ').replace(/ \n\n /g, '\n\n')
+  if (currentParagraph.length > 0) {
+    paragraphs.push(currentParagraph.join(' '));
+  }
+
+  return paragraphs.join('\n\n');
 }
 
 function getRandomIntInclusive(min, max) {
@@ -173,20 +120,34 @@ function toCap(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
+function makeRandomUsers(count = 1) {
+  const firstNames = ['Emma', 'Noah', 'Olivia', 'Liam', 'Ava', 'William', 'Sophia', 'Mason', 'Isabella', 'James']
+  const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez']
+  const domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'example.com', 'mail.com']
 
-function makeEmail() {
-  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
-  const domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'example.com', 'test.org']
+  const createSingleUser = () => {
+    const fName = firstNames[Math.floor(Math.random() * firstNames.length)]
+    const lName = lastNames[Math.floor(Math.random() * lastNames.length)]
+    const domain = domains[Math.floor(Math.random() * domains.length)]
+    const num = Math.floor(Math.random() * 1000)
 
-  const usernameLength = Math.floor(Math.random() * 11) + 5
-  let username = ''
-
-  for (let i = 0; i < usernameLength; i++) {
-    username += chars.charAt(Math.floor(Math.random() * chars.length))
+    return {
+      firstName: fName,
+      lastName: lName,
+      fullName: `${fName} ${lName}`,
+      email: `${fName.toLowerCase()}.${lName.toLowerCase()}${num}@${domain}`,
+    }
   }
-  const randomDomain = domains[Math.floor(Math.random() * domains.length)]
 
-  return `${username}@${randomDomain}`
+  if (count === 1) {
+    return createSingleUser()
+  }
+
+  const users = []
+  for (let i = 0; i < count; i++) {
+    users.push(createSingleUser())
+  }
+  return users
 }
 
 function makeDate() {
