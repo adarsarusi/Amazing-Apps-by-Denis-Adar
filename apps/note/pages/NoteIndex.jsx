@@ -29,10 +29,10 @@ export function NoteIndex() {
 
     useEffect(() => {
         loadNotes()
-    }, [])
+    }, [filterBy])
 
     function loadNotes() {
-        noteService.query()
+        noteService.query(filterBy)
             .then(notes => setNotes(notes))
             .catch(err => {
                 console.log('Cannot load notes', err)
@@ -57,11 +57,16 @@ export function NoteIndex() {
             })
     }
 
+    function onClearFilter() {
+        setFilterBy(noteService.getDefaultFilter())
+    }
+
     return <section className="container">
         <React.Fragment>
             <NoteFilter
                 filterBy={filterBy}
-                setFilterBy={setFilterBy} />
+                setFilterBy={setFilterBy}
+                onClearFilter={onClearFilter} />
 
             <NoteEdit onSaveNote={onSaveNote} />
 
@@ -76,11 +81,11 @@ export function NoteIndex() {
             </Modal> */}
 
 
-            {!notes.length && 
-            <section className="empty-notes">
-                <img src="apps\note\imgs\note-icon.png" alt="" />
-                <p>Your notes will appear here!</p>    
-            </section>}
+            {!notes.length &&
+                <section className="empty-notes">
+                    <img src="apps\note\imgs\note-icon.png" alt="" />
+                    <p>Your notes will appear here!</p>
+                </section>}
 
             <NoteList
                 notes={notes}

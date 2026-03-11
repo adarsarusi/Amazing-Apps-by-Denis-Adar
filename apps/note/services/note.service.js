@@ -11,7 +11,8 @@ export const noteService = {
     get,
     remove,
     save,
-    getEmptyNote
+    getEmptyNote,
+    getDefaultFilter
 }
 
 function query(filterBy = {}) {
@@ -19,7 +20,16 @@ function query(filterBy = {}) {
         .then(notes => {
             if (filterBy.txt) {
                 const regExp = new RegExp(filterBy.txt, 'i')
-                notes = notes.filter(note => regExp.test(note.vendor))
+
+                notes = notes.filter(note =>
+                    regExp.test(note.info.title) ||
+                    regExp.test(note.info.txt)
+                )
+            }
+
+            if (filterBy.type) {
+                console.log(filterBy.type)
+                notes = notes.filter(note => note.type === filterBy.type)
             }
 
             return notes
@@ -54,6 +64,13 @@ function getEmptyNote(title = '', txt = '') {
             title,
             txt
         }
+    }
+}
+
+function getDefaultFilter() {
+    return {
+        txt: '',
+        type: ''
     }
 }
 
