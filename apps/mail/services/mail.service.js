@@ -60,7 +60,7 @@ function query(filterBy = {}) {
 }
 
 function get(mailId) {
-  return storageService.getMail(MAIL_KEY, mailId).then((mail) => {
+  return storageService.get(MAIL_KEY, mailId).then((mail) => {
     mail = _setNextPrevMail(mail)
     return mail
   })
@@ -127,11 +127,12 @@ function getEmptyMail() {
 
 function _setNextPrevMail(mail) {
   return storageService.query(MAIL_KEY).then((mails) => {
+    console.log(mails)
     const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
-    const nextMail = mail[mailIdx + 1] ? mail[mailIdx + 1] : mail[0]
-    const prevMail = mail[mailIdx - 1] ? mail[mailIdx - 1] : mail[mail.length - 1]
-    mail.nextMail = nextMail.id
-    mail.prevMail = prevMail.id
+    const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
+    const prevMail = mails[mailIdx - 1] ? mails[mailIdx - 1] : mails[mails.length - 1]
+    mail.nextMailId = nextMail.id
+    mail.prevMailId = prevMail.id
     return mail
   })
 }
@@ -151,7 +152,8 @@ function _createMails(amount) {
       body: utilService.makeLorem(100),
       pageCount: utilService.getRandomIntInclusive(20, 600),
       labels: lbls[utilService.getRandomIntInclusive[(0, 5)]],
-      isRead: false,
+      isTrash: 0,
+      isRead: Math.random() < 0.7,
       isStared: false,
       isImportant: false,
       isSpam: false,

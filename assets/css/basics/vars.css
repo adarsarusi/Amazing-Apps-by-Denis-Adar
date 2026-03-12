@@ -1,13 +1,40 @@
 :root {
-    --bg1: lightblue;
-    --bg2: rgb(50, 160, 204);
-    --bg3: rgb(89, 134, 206);
-    
-    --color1: rgb(26, 115, 232);
-    --color2: rgb(24, 128, 56);
-    --color3: rgb(197, 34, 31);
+  /* Misster Mail */
 
-    --gray2: #aaa;
-    --gray2: #888;
-    --gray2: #333;
+  --color-primary-50: #f8fafd;
+  --color-primary-100: #f2f6fc;
+  --color-primary-200: #e9eef6;
+  --color-primary-300: #d3e3fd;
+  --color-primary-400: #c2e7ff;
+
+  --color-neutral-300: #dadce0;
+  --color-neutral-400: #64798f;
+  --color-neutral-600: #5f6368;
+  --color-neutral-700: #3c4043;
+  --color-neutral-800: #454647;
+  --color-neutral-900: #1f1f1f;
+
+  --shadow-mail-default-top: inset 0 1px 0 0 rgba(100, 121, 143, 0.12);
+  --shadow-mail-default-bottom: inset 0 -1px 0 0 rgba(100, 121, 143, 0.12);
+  --shadow-mail-hover:
+    inset 1px 0 0 rgb(218, 220, 224), inset -1px 0 0 rgb(218, 220, 224), 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+    0 1px 3px 1px rgba(60, 64, 67, 0.15);
+
+  --bold: 700;
+
+  /* END */
+
+  --bg1: lightblue;
+  --bg2: rgb(50, 160, 204);
+  --bg3: rgb(89, 134, 206);
+
+  --color1: rgb(26, 115, 232);
+  --color2: rgb(24, 128, 56);
+  --color3: rgb(197, 34, 31);
+
+  --gray2: #aaa;
+  --gray2: #888;
+  --gray2: #333;
+
+  --black0: #303030;
 }

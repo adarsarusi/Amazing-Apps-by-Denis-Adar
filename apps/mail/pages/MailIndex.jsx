@@ -16,7 +16,17 @@ export function MailIndex() {
     mailService.query(filterBy).then(setMails)
   }
 
+  function onMailRemove(mailId) {
+    mailService.get(mailId).then((mail) => {
+      console.log('ggs')
+      mail.isTrash += 1
+      console.log(mail.isTrash)
+      mailService.save(mail)
+      if (mail.isTrash === 2) mailService.remove(mailId)
+    })
+  }
+
   if (!mails) return <p>No messages matched your search. Try using search options such as sender, date, size and more.</p>
-  console.log(mails)
-  return <MailList mails={mails} />
+
+  return <MailList mails={mails} onRemove={onMailRemove} />
 }

@@ -1,0 +1,23 @@
+[class^="icon-"]::before,
+[class*=" icon-"]::before {
+  font-family: 'Material Symbols Outlined';
+  font-feature-settings: 'liga';
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 0;
+  padding: 0;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.icon-delete::before   { content: 'delete'; }
+.icon-home::before     { content: 'home'; }
+.icon-search::before   { content: 'search'; }
+.icon-user::before     { content: 'person'; }
+.icon-check::before    { content: 'check'; }
+.icon-close::before    { content: 'close'; }
+.icon-settings::before { content: 'settings'; }
+.icon-logout::before { content: 'logout'; }

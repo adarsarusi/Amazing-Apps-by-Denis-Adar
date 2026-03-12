@@ -34,44 +34,86 @@ function makeId(length = 6) {
 
 function makeLorem(wordCount = 100, includeDot = true) {
   const words = [
-    'the', 'sky', 'above', 'port', 'was', 'color', 'of', 'nature', 'tuned',
-    'to', 'a', 'live', 'channel', 'all', 'this', 'happened', 'more', 'or',
-    'less', 'I', 'had', 'story', 'bit', 'by', 'from', 'various', 'people',
-    'and', 'as', 'generally', 'happens', 'in', 'such', 'cases', 'each',
-    'time', 'it', 'different', 'pleasure', 'burn', 'bright', 'cold', 'day',
-    'April', 'clocks', 'were', 'striking', 'thirteen'
-  ];
+    'the',
+    'sky',
+    'above',
+    'port',
+    'was',
+    'color',
+    'of',
+    'nature',
+    'tuned',
+    'to',
+    'a',
+    'live',
+    'channel',
+    'all',
+    'this',
+    'happened',
+    'more',
+    'or',
+    'less',
+    'I',
+    'had',
+    'story',
+    'bit',
+    'by',
+    'from',
+    'various',
+    'people',
+    'and',
+    'as',
+    'generally',
+    'happens',
+    'in',
+    'such',
+    'cases',
+    'each',
+    'time',
+    'it',
+    'different',
+    'pleasure',
+    'burn',
+    'bright',
+    'cold',
+    'day',
+    'April',
+    'clocks',
+    'were',
+    'striking',
+    'thirteen',
+  ]
 
-  let remaining = wordCount;
-  let paragraphs = [];
-  let currentParagraph = [];
+  let remaining = wordCount
+  let paragraphs = []
+  let currentParagraph = []
 
   while (remaining > 0) {
-    let sentenceLength = Math.min(remaining, Math.floor(Math.random() * 11) + 4);
-    let sentenceWords = [];
+    let sentenceLength = Math.min(remaining, Math.floor(Math.random() * 11) + 4)
+    let sentenceWords = []
 
     for (let i = 0; i < sentenceLength; i++) {
-      sentenceWords.push(words[Math.floor(Math.random() * words.length)]);
+      sentenceWords.push(words[Math.floor(Math.random() * words.length)])
     }
 
-    let sentenceStr = sentenceWords.join(' ');
-    let punctuation = includeDot ? '.' : '';
-    sentenceStr = sentenceStr.charAt(0).toUpperCase() + sentenceStr.slice(1) + punctuation;
+    let sentenceStr = sentenceWords.join(' ')
+    let punctuation = includeDot ? '.' : ''
+    sentenceStr = sentenceStr.charAt(0).toUpperCase() + sentenceStr.slice(1) + punctuation
 
-    currentParagraph.push(sentenceStr);
-    remaining -= sentenceLength;
+    currentParagraph.push(sentenceStr)
+    remaining -= sentenceLength
 
     if (Math.random() > 0.8 && remaining > 0) {
-      paragraphs.push(currentParagraph.join(' '));
-      currentParagraph = [];
+      paragraphs.push(currentParagraph.join(' '))
+      currentParagraph = []
     }
   }
 
   if (currentParagraph.length > 0) {
-    paragraphs.push(currentParagraph.join(' '));
+    paragraphs.push(currentParagraph.join(' '))
   }
 
-  return paragraphs.join('\n\n');
+  return paragraphs.join('\n\n')
 }
 
 function getRandomIntInclusive(min, max) {
@@ -99,20 +141,7 @@ function getDayName(date, locale) {
 }
 
 function getMonthName(date) {
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ]
+  const monthNames = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Octr', 'Nov', 'Dec']
   return monthNames[date.getMonth()]
 }
 
@@ -161,5 +190,5 @@ function makeDate() {
 
   const randomMs = startMs + Math.random() * (endMs - startMs)
 
-  return new Date(randomMs)
+  return randomMs
 }
