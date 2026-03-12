@@ -4,6 +4,7 @@
 @import './basics/helpers.css';
 @import './basics/layout.css';
 @import './basics/reset.css';
+@import './basics/icons.css';
 
 /* GLOBAL PAGE */
 @import './cmps/home.css';
