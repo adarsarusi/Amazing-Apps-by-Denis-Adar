@@ -21,3 +21,7 @@
 .icon-close::before    { content: 'close'; }
 .icon-settings::before { content: 'settings'; }
 .icon-logout::before { content: 'logout'; }
+.icon-palette::before { content: 'palette'; }
+.icon-content_copy::before { content: 'content_copy'; }
+.icon-edit_square::before { content: 'edit_square'; }
+.icon-keep::before { content: 'keep'; }

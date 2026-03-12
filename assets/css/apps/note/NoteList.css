@@ -24,13 +24,13 @@
 
 .actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
     opacity: 0;
     transition: 400ms;
 
-    >img {
-        width: 40px;
+    >div {
+        font-size: 1.5rem;
         cursor: pointer;
 
         opacity: 0.5;

@@ -9,21 +9,16 @@ export function NoteList({ notes, onRemoveNote }) {
                     <NotePreview note={note} />
                     <div className="actions">
 
-                        <img className="color-picker"
-                            src="apps\note\imgs\features\pallete.png" alt="" />
+                        <div className="icon-palette"></div>
 
-                        <img className="pin"
-                            src="apps\note\imgs\features\pinned.png" alt="" />
+                        <div className="icon-keep"></div>
 
-                        <img className="edit"
-                            src="apps\note\imgs\features\edit.png" alt="" />
+                        <div className="icon-edit_square"></div>
 
-                        <img className="duplicate"
-                            src="apps\note\imgs\features\duplicate.png" alt="" />
+                        <div className="icon-content_copy"></div>
 
-                        <img onClick={() => onRemoveNote(note.id)}
-                            className="btn-remove"
-                            src="apps\note\imgs\features\delete.png" alt="" />
+                        <div onClick={() => onRemoveNote(note.id)}
+                            className="icon-delete"></div>
 
                     </div>
                 </li>
