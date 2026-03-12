@@ -15,3 +15,9 @@
         }
     }
  }
+
+ .empty-notes{
+    >img{
+        display: inline-block;
+    }
+ }
