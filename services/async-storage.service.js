@@ -19,16 +19,6 @@ function get(entityType, entityId) {
     })
 }
 
-function post(entityType, newEntity) {
-    newEntity = {...newEntity}
-    newEntity.id = _makeId()
-    return query(entityType).then(entities => {
-        entities.push(newEntity)
-        _save(entityType, entities)
-        return newEntity
-    })
-}
-
 function put(entityType, updatedEntity) {
     return query(entityType).then(entities => {
         const idx = entities.findIndex(entity => entity.id === updatedEntity.id)
@@ -38,6 +28,17 @@ function put(entityType, updatedEntity) {
         return updatedEntity
     })
 }
+
+function post(entityType, newEntity) {
+    newEntity = { ...newEntity }
+    newEntity.id = _makeId()
+    return query(entityType).then(entities => {
+        entities.push(newEntity)
+        _save(entityType, entities)
+        return newEntity
+    })
+}
+
 
 function remove(entityType, entityId) {
     return query(entityType).then(entities => {
