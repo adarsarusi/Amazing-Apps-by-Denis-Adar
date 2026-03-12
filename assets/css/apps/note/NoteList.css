@@ -1,1 +1,19 @@
  /* note list */
+
+ .notes-list {
+     column-count: 4;
+     column-width: 250px;
+     column-gap: 16px;
+
+
+     >li {
+         break-inside: avoid;
+         margin-bottom: 16px;
+         /* margin-block-start: 10px; */
+
+         border: 1px solid grey;
+         border-radius: 8px;
+
+         padding-bottom: 10px;
+     }
+ }

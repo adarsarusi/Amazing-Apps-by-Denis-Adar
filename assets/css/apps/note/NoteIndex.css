@@ -1,1 +1,17 @@
  /* note index */
+
+ .container{
+    text-align: center;
+
+    margin-block-start: 5vh;
+
+    >.empty-notes{
+        >img{
+            width: 250px;
+        }
+
+        >p{
+            font-size: 1.8em;
+        }
+    }
+ }

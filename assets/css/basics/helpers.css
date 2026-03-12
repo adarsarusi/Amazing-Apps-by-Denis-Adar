@@ -21,3 +21,20 @@
 .grid {
     display: grid;
 }
+
+/* Grid Helpers */
+
+.fluid-grid {
+    --min-column-width: 180px;
+
+    display: grid;
+    grid-template-columns: 
+        repeat(auto-fit, minmax(var(--min-column-width), 1fr));
+}
+
+/* Clean List */
+
+.clean-list{
+    padding: 0;
+    list-style: none;
+}
