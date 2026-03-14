@@ -1,0 +1,26 @@
+/* Mail Folder List */
+
+.mail-folder-list {
+  width: 100%;
+  /* background-color: green; */
+}
+
+.mail-folder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: stretch;
+  gap: 1rem;
+
+  width: 100%;
+
+
+  border-radius: 0 1rem 1rem 0;
+  padding: 0.5em;
+  padding-inline-start: 1em;
+
+
+  &.selected {
+    background-color: var(--color-primary-300);
+  }
+}

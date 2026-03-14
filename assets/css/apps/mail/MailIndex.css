@@ -1,1 +1,32 @@
  /* mail index  */
+
+
+ .mail-index {
+     height: 100vh;
+     display: grid;
+     /* align-items: start; */
+     grid-template-columns: 15rem 1fr;
+     grid-template-rows: 5rem 1fr;
+     grid-template-areas:
+         "filter filter"
+         "sidebar main"
+         "sidebar main";
+
+
+     .mail-folder-list {
+         grid-area: sidebar;
+         align-self: start;
+     }
+
+     .mail-filter {
+         grid-area: filter;
+         align-self: center;
+     }
+
+     .mail-list {
+         grid-area: main;
+         align-self: start;
+     }
+
+     background-color: var(--color-primary-50);
+ }
