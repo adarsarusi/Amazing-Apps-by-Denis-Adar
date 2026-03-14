@@ -25,3 +25,4 @@
 .icon-content_copy::before { content: 'content_copy'; }
 .icon-edit_square::before { content: 'edit_square'; }
 .icon-keep::before { content: 'keep'; }
+.icon-keep_off::before { content: 'keep_off'; }

@@ -14,8 +14,12 @@ export function NoteIndex() {
 
     const [notes, setNotes] = useState([])
     const [filterBy, setFilterBy] = useState({ txt: '' })
-    // const [isShown, setIsShown] = useState(false)
     const [isNoting, setIsNoting] = useState(false)
+
+    const pinnedNotes = notes.filter(note => note.isPinned)
+    const unpinnedNotes = notes.filter(note => !note.isPinned)
+
+    // const [isShown, setIsShown] = useState(false)
 
     // function onOpenModal() {
     //     console.log('Modal has opened...')
@@ -47,6 +51,15 @@ export function NoteIndex() {
                 showSuccessMsg(`Note removed`)
             })
             .catch(err => showErrorMsg(`Couldn't remove note`))
+    }
+
+    function onPinNote(noteId) {
+        noteService.get(noteId)
+            .then(note => {
+                note.isPinned = !note.isPinned
+                return noteService.save(note)
+            })
+            .then(loadNotes)
     }
 
     function onSaveNote(noteToSave) {
@@ -87,10 +100,28 @@ export function NoteIndex() {
                     <p>Your notes will appear here!</p>
                 </section>}
 
-            <NoteList
+
+            {pinnedNotes.length > 0 && (
+                <section className="pinned-notes">
+                    <h3>Pinned:</h3>
+                    <NoteList notes={pinnedNotes}
+                        onRemoveNote={onRemoveNote}
+                        onPinNote={onPinNote} />
+                </section>
+            )}
+
+            <section className="other-notes">
+                <h3>Others:</h3>
+                <NoteList notes={unpinnedNotes}
+                    onRemoveNote={onRemoveNote}
+                    onPinNote={onPinNote} />
+            </section>
+
+            {/* <NoteList
                 notes={notes}
                 onRemoveNote={onRemoveNote}
-            />
+                onPinNote={onPinNote}
+            /> */}
         </React.Fragment>
     </section>
 }

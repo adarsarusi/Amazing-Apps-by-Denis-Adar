@@ -1,4 +1,12 @@
 .note-preview {
     overflow-wrap: break-word;
     word-break: break-word;
+
+    margin-bottom: 25px;
+
+    >.note-text {
+        white-space: pre-wrap;
+
+        text-align: left;
+    }
 }

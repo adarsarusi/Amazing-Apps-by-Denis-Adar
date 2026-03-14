@@ -21,12 +21,23 @@
             outline: none;
             background: transparent;
         }
+
+        >textarea {
+            resize: none;
+            overflow: hidden;
+            min-height: 40px;
+
+            padding: 8px;
+            border: none;
+            outline: none;
+            background: transparent;
+        }
     }
 
-    >.note-controls{
+    >.note-controls {
         margin-block-start: 5px;
 
-        >.save-btn{
+        >.save-btn {
             border: 1px solid grey;
             border-radius: 5px;
             padding: 5px;
@@ -35,9 +46,9 @@
 
             cursor: pointer;
 
-            &:hover{
+            &:hover {
                 border-color: rgb(28, 164, 226);
-                color:rgb(28, 164, 226);
+                color: rgb(28, 164, 226);
             }
         }
     }

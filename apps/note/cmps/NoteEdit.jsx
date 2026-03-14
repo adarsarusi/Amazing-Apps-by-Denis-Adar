@@ -58,8 +58,7 @@ export function NoteEdit({ onSaveNote }) {
                     />
                 }
 
-                <input
-                    type="text"
+                <textarea
                     name="txt"
                     placeholder="Take a note..."
                     value={noteToEdit.info.txt}

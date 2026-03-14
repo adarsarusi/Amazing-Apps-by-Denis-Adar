@@ -1,6 +1,6 @@
 import { NotePreview } from '../cmps/NotePreview.jsx'
 
-export function NoteList({ notes, onRemoveNote }) {
+export function NoteList({ notes, onRemoveNote, onPinNote }) {
     return <section className="">
         <ul className="notes-list clean-list">
             {notes.map(note => (
@@ -11,7 +11,8 @@ export function NoteList({ notes, onRemoveNote }) {
 
                         <div className="icon-palette"></div>
 
-                        <div className="icon-keep"></div>
+                        <div onClick={() => onPinNote(note.id)}
+                        className={` ${note.isPinned ? 'icon-keep_off' : 'icon-keep'}`}></div>
 
                         <div className="icon-edit_square"></div>
 
