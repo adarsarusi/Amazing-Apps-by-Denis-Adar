@@ -9,6 +9,7 @@ import { noteService } from '../services/note.service.js'
 import { Modal } from '../../../cmps/Modal.jsx'
 import { UserMsg } from '../../../cmps/UserMsg.jsx'
 import { eventBus, showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service.js'
+import { utilService } from '../../../services/util.service.js'
 
 export function NoteIndex() {
 
@@ -18,18 +19,6 @@ export function NoteIndex() {
 
     const pinnedNotes = notes.filter(note => note.isPinned)
     const unpinnedNotes = notes.filter(note => !note.isPinned)
-
-    // const [isShown, setIsShown] = useState(false)
-
-    // function onOpenModal() {
-    //     console.log('Modal has opened...')
-    //     setIsShown(true)
-    // }
-
-    // function onCloseModal() {
-    //     console.log('Modal has closed...')
-    //     setIsShown(false)
-    // }
 
     useEffect(() => {
         loadNotes()
@@ -62,6 +51,25 @@ export function NoteIndex() {
             .then(loadNotes)
     }
 
+    function onChangeColor(noteId, newColor){
+        noteService.get(noteId)
+            .then(note =>{
+                note.style.backgroundColor = newColor
+                return noteService.save(note)
+            })
+            .then(loadNotes)
+    }
+
+    function onDuplicateNote(noteId) {
+        noteService.get(noteId)
+            .then(note => {
+                const copy = { ...note }
+                delete copy.id
+                return noteService.save(copy)
+            })
+            .then(loadNotes)
+    }
+
     function onSaveNote(noteToSave) {
         noteService.save(noteToSave)
             .then(savedNote => {
@@ -83,17 +91,6 @@ export function NoteIndex() {
 
             <NoteEdit onSaveNote={onSaveNote} />
 
-
-            {/* currently placeholder will use to edit */}
-            {/* <input type="text" placeholder="Take a note..." onClick={onOpenModal}/> */}
-            {/* <Modal
-                isShown={isShown}
-                onClose={onCloseModal}>
-
-                    <h1>Title:</h1>
-            </Modal> */}
-
-
             {!notes.length &&
                 <section className="empty-notes">
                     <img src="apps\note\imgs\note-icon.png" alt="" />
@@ -106,7 +103,9 @@ export function NoteIndex() {
                     <h3>Pinned:</h3>
                     <NoteList notes={pinnedNotes}
                         onRemoveNote={onRemoveNote}
-                        onPinNote={onPinNote} />
+                        onPinNote={onPinNote}
+                        onDuplicateNote={onDuplicateNote}
+                        onChangeColor={onChangeColor} />
                 </section>
             )}
 
@@ -114,7 +113,9 @@ export function NoteIndex() {
                 <h3>Others:</h3>
                 <NoteList notes={unpinnedNotes}
                     onRemoveNote={onRemoveNote}
-                    onPinNote={onPinNote} />
+                    onPinNote={onPinNote}
+                    onDuplicateNote={onDuplicateNote}
+                    onChangeColor={onChangeColor} />
             </section>
 
             {/* <NoteList

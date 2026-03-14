@@ -23,7 +23,7 @@ export function Modal({ isShown, onClose = null, children }) {
 
                 <button 
                     className="btn-close"
-                    onClick={onCloseModal}>x</button>
+                    onClick={onCloseModal}>✕</button>
 		</dialog>
 	)
 }

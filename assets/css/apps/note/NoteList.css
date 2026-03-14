@@ -1,7 +1,8 @@
  /* note list */
 
- .pinned-notes, .other-notes{
-    margin-top: 16px;
+ .pinned-notes,
+ .other-notes {
+     margin-top: 16px;
  }
 
  .notes-list {
@@ -25,8 +26,8 @@
          }
      }
 
-     ul>{
-        margin-bottom: 0;
+     ul> {
+         margin-bottom: 0;
      }
  }
 
@@ -50,4 +51,49 @@
              scale: 1.1;
          }
      }
+ }
+
+ .color-listbox {
+     display: grid;
+     grid-template-columns: repeat(5, 36px);
+     justify-content: center;
+     gap: 10px;
+     margin-top: 12px;
+ }
+
+ .color-option {
+     width: 36px;
+     height: 36px;
+     border-radius: 15px;
+     cursor: pointer;
+     border: 2px solid transparent;
+     transition: transform 0.15s, border 0.15s;
+ }
+
+ .color-option:hover {
+     transform: scale(1.15);
+     border: 2px solid grey;
+ }
+
+ .modal {
+     border: none;
+     border-radius: 10px;
+     padding: 24px;
+     width: 320px;
+
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+     position: relative;
+ }
+
+ .btn-close {
+     position: absolute;
+     top: 8px;
+     right: 10px;
+
+     border: none;
+     background: transparent;
+
+     font-size: 1.2rem;
+     cursor: pointer;
  }
