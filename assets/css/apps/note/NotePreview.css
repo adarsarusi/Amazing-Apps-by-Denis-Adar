@@ -9,4 +9,17 @@
 
         text-align: left;
     }
+
+    >img{
+        width: 500px;
+    }
+}
+
+.video-player{
+    width: 100%;
+}
+
+.done{
+    color: grey;
+    text-decoration: line-through;
 }

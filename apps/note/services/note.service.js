@@ -28,7 +28,6 @@ function query(filterBy = {}) {
             }
 
             if (filterBy.type) {
-                console.log(filterBy.type)
                 notes = notes.filter(note => note.type === filterBy.type)
             }
 

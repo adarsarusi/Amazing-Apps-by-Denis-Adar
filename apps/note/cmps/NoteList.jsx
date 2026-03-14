@@ -3,7 +3,7 @@ import { Modal } from '../../../cmps/Modal.jsx'
 
 const { useState, useEffect } = React
 
-export function NoteList({ notes, onRemoveNote, onPinNote, onDuplicateNote, onChangeColor }) {
+export function NoteList({ notes, onRemoveNote, onPinNote, onDuplicateNote, onChangeColor, onToggleTodo }) {
 
     const colors = [
         { name: 'Coral', color: '#faafa8' },
@@ -35,7 +35,8 @@ export function NoteList({ notes, onRemoveNote, onPinNote, onDuplicateNote, onCh
             {notes.map(note => (
                 <li key={note.id}
                     style={{ backgroundColor: note.style.backgroundColor }}>
-                    <NotePreview note={note} />
+                    <NotePreview note={note}
+                        onToggleTodo={onToggleTodo} />
                     <div className="actions">
 
                         <div onClick={() => onOpenModal(note.id)}

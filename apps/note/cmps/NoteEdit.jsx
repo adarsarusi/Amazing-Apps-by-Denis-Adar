@@ -66,7 +66,17 @@ export function NoteEdit({ onSaveNote }) {
     function onSubmitNote(ev) {
         ev.preventDefault()
 
-        onSaveNote(noteToEdit)
+        let noteToSave = { ...noteToEdit }
+
+        if (noteToSave.type === 'NoteTodos') {
+            noteToSave.info.todos = noteToSave.info.todos
+                .split(',')
+                .map(txt => txt.trim())
+                .filter(Boolean)
+                .map(txt => ({ txt, isDone: false }))
+        }
+
+        onSaveNote(noteToSave)
 
         setNoteToEdit(noteService.getEmptyNote())
         setIsNoting(false)
@@ -95,14 +105,6 @@ export function NoteEdit({ onSaveNote }) {
                     handleChange={handleChange}
                     onOpenNoteForm={onOpenNoteForm}
                 />
-
-                {/* <textarea
-                    name="txt"
-                    placeholder="Take a note..."
-                    value={noteToEdit.info.txt}
-                    onClick={onOpenNoteForm}
-                    onChange={handleChange}
-                /> */}
             </div>
 
             {isNoting && <div className="note-controls">
@@ -185,6 +187,7 @@ function NoteEditTodos({ note, handleChange, onOpenNoteForm }) {
             type="text"
             name="todos"
             placeholder="Enter comma separated list..."
+            value={note.info.todos || ''}
             onClick={onOpenNoteForm}
             onChange={handleChange}
         />

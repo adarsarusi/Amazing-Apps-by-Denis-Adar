@@ -15,7 +15,6 @@ export function NoteIndex() {
 
     const [notes, setNotes] = useState([])
     const [filterBy, setFilterBy] = useState({ txt: '' })
-    const [isNoting, setIsNoting] = useState(false)
 
     const pinnedNotes = notes.filter(note => note.isPinned)
     const unpinnedNotes = notes.filter(note => !note.isPinned)
@@ -70,6 +69,15 @@ export function NoteIndex() {
             .then(loadNotes)
     }
 
+    function onToggleTodo(noteId, todoIdx) {
+        noteService.get(noteId)
+            .then(note => {
+                note.info.todos[todoIdx].isDone = !note.info.todos[todoIdx].isDone
+                return noteService.save(note)
+            })
+            .then(loadNotes)
+    }
+
     function onSaveNote(noteToSave) {
         noteService.save(noteToSave)
             .then(savedNote => {
@@ -105,7 +113,8 @@ export function NoteIndex() {
                         onRemoveNote={onRemoveNote}
                         onPinNote={onPinNote}
                         onDuplicateNote={onDuplicateNote}
-                        onChangeColor={onChangeColor} />
+                        onChangeColor={onChangeColor}
+                        onToggleTodo={onToggleTodo} />
                 </section>
             )}
 
@@ -115,7 +124,8 @@ export function NoteIndex() {
                     onRemoveNote={onRemoveNote}
                     onPinNote={onPinNote}
                     onDuplicateNote={onDuplicateNote}
-                    onChangeColor={onChangeColor} />
+                    onChangeColor={onChangeColor}
+                    onToggleTodo={onToggleTodo} />
             </section>
         </React.Fragment>
     </section>
