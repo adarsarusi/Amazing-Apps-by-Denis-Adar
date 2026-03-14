@@ -51,9 +51,9 @@ export function NoteIndex() {
             .then(loadNotes)
     }
 
-    function onChangeColor(noteId, newColor){
+    function onChangeColor(noteId, newColor) {
         noteService.get(noteId)
-            .then(note =>{
+            .then(note => {
                 note.style.backgroundColor = newColor
                 return noteService.save(note)
             })
@@ -110,19 +110,13 @@ export function NoteIndex() {
             )}
 
             <section className="other-notes">
-                <h3>Others:</h3>
+                {pinnedNotes.length > 0 && <h3>Others:</h3>}
                 <NoteList notes={unpinnedNotes}
                     onRemoveNote={onRemoveNote}
                     onPinNote={onPinNote}
                     onDuplicateNote={onDuplicateNote}
                     onChangeColor={onChangeColor} />
             </section>
-
-            {/* <NoteList
-                notes={notes}
-                onRemoveNote={onRemoveNote}
-                onPinNote={onPinNote}
-            /> */}
         </React.Fragment>
     </section>
 }

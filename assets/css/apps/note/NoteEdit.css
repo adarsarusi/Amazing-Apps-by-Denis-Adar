@@ -37,6 +37,26 @@
     >.note-controls {
         margin-block-start: 5px;
 
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+
+        width: 50vw;
+
+        >img {
+            width: 25px;
+
+            opacity: 0.5;
+            transition: 200ms;
+
+            &:hover {
+                opacity: 1;
+                scale: 1.1;
+
+                cursor: pointer;
+            }
+        }
+
         >.save-btn {
             border: 1px solid grey;
             border-radius: 5px;

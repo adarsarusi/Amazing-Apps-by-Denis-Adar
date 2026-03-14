@@ -26,3 +26,7 @@
 .icon-edit_square::before { content: 'edit_square'; }
 .icon-keep::before { content: 'keep'; }
 .icon-keep_off::before { content: 'keep_off'; }
+.icon-text::before { content: 'text'; }
+.icon-image::before { content: 'image'; }
+.icon-video::before { content: 'video'; }
+.icon-list::before { content: 'list'; }

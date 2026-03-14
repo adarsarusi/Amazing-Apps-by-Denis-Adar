@@ -7,6 +7,8 @@ export function NoteEdit({ onSaveNote }) {
     const [isNoting, setIsNoting] = useState(false)
     const noteFormRef = useRef(null)
 
+    const EditorCmp = getEditorCmp(noteToEdit.type)
+
     useEffect(() => {
         function handleClickOutside(ev) {
             if (!isNoting) return
@@ -29,6 +31,36 @@ export function NoteEdit({ onSaveNote }) {
                 [name]: value
             }
         }))
+    }
+
+    function changeType(type) {
+        setNoteToEdit(prev => ({
+            ...prev,
+            type,
+            info: getInfoByType(type)
+        }))
+    }
+
+    function getInfoByType(type) {
+        switch (type) {
+            case 'NoteTxt':
+                return { title: '', txt: '' }
+
+            case 'NoteImg':
+                return { title: '', url: '' }
+
+            case 'NoteVideo':
+                return { title: '', url: '' }
+
+            case 'NoteTodos':
+                return {
+                    title: '',
+                    todos: []
+                }
+
+            default:
+                return { title: '', txt: '' }
+        }
     }
 
     function onSubmitNote(ev) {
@@ -58,18 +90,103 @@ export function NoteEdit({ onSaveNote }) {
                     />
                 }
 
-                <textarea
+                <EditorCmp
+                    note={noteToEdit}
+                    handleChange={handleChange}
+                    onOpenNoteForm={onOpenNoteForm}
+                />
+
+                {/* <textarea
                     name="txt"
                     placeholder="Take a note..."
                     value={noteToEdit.info.txt}
                     onClick={onOpenNoteForm}
                     onChange={handleChange}
-                />
+                /> */}
             </div>
 
-            <div className="note-controls">
-                {isNoting && <button className="save-btn">Save</button>}
-            </div>
+            {isNoting && <div className="note-controls">
+
+                <img onClick={() => changeType('NoteTxt')}
+                    src="apps\note\imgs\types\NoteTxt.png" alt="" />
+
+                <img onClick={() => changeType('NoteImg')}
+                    src="apps\note\imgs\types\NoteImg.png" alt="" />
+
+                <img onClick={() => changeType('NoteVideo')}
+                    src="apps\note\imgs\types\NoteVideo.png" alt="" />
+
+                <img onClick={() => changeType('NoteTodos')}
+                    src="apps\note\imgs\types\NoteTodos.png" alt="" />
+
+                <button className="save-btn">Save</button>
+
+            </div>}
         </form>
+    )
+}
+
+function getEditorCmp(type) {
+    switch (type) {
+        case 'NoteTxt':
+            return NoteEditTxt
+        case 'NoteImg':
+            return NoteEditImg
+        case 'NoteVideo':
+            return NoteEditVideo
+        case 'NoteTodos':
+            return NoteEditTodos
+        default:
+            return NoteEditTxt
+    }
+}
+
+function NoteEditTxt({ note, handleChange, onOpenNoteForm }) {
+    return (
+        <textarea
+            name="txt"
+            placeholder="Take a note..."
+            value={note.info.txt}
+            onClick={onOpenNoteForm}
+            onChange={handleChange}
+        />
+    )
+}
+
+function NoteEditImg({ note, handleChange, onOpenNoteForm }) {
+    return (
+        <input
+            type="text"
+            name="url"
+            placeholder="Enter image URL..."
+            value={note.info.url}
+            onClick={onOpenNoteForm}
+            onChange={handleChange}
+        />
+    )
+}
+
+function NoteEditVideo({ note, handleChange, onOpenNoteForm }) {
+    return (
+        <input
+            type="text"
+            name="url"
+            placeholder="Enter video URL..."
+            value={note.info.url}
+            onClick={onOpenNoteForm}
+            onChange={handleChange}
+        />
+    )
+}
+
+function NoteEditTodos({ note, handleChange, onOpenNoteForm }) {
+    return (
+        <input
+            type="text"
+            name="todos"
+            placeholder="Enter comma separated list..."
+            onClick={onOpenNoteForm}
+            onChange={handleChange}
+        />
     )
 }
