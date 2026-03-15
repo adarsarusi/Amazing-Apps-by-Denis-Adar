@@ -1,7 +1,7 @@
 const { useState, useEffect, useRef } = React
 import { noteService } from '../services/note.service.js'
 
-export function NoteEdit({ onSaveNote }) {
+export function NoteAdd({ onSaveNote }) {
 
     const [noteToEdit, setNoteToEdit] = useState(noteService.getEmptyNote())
     const [isNoting, setIsNoting] = useState(false)
@@ -131,19 +131,19 @@ export function NoteEdit({ onSaveNote }) {
 function getEditorCmp(type) {
     switch (type) {
         case 'NoteTxt':
-            return NoteEditTxt
+            return NoteAddTxt
         case 'NoteImg':
-            return NoteEditImg
+            return NoteAddImg
         case 'NoteVideo':
-            return NoteEditVideo
+            return NoteAddVideo
         case 'NoteTodos':
-            return NoteEditTodos
+            return NoteAddTodos
         default:
-            return NoteEditTxt
+            return NoteAddTxt
     }
 }
 
-function NoteEditTxt({ note, handleChange, onOpenNoteForm }) {
+function NoteAddTxt({ note, handleChange, onOpenNoteForm }) {
     return (
         <textarea
             name="txt"
@@ -155,7 +155,7 @@ function NoteEditTxt({ note, handleChange, onOpenNoteForm }) {
     )
 }
 
-function NoteEditImg({ note, handleChange, onOpenNoteForm }) {
+function NoteAddImg({ note, handleChange, onOpenNoteForm }) {
     return (
         <input
             type="text"
@@ -168,7 +168,7 @@ function NoteEditImg({ note, handleChange, onOpenNoteForm }) {
     )
 }
 
-function NoteEditVideo({ note, handleChange, onOpenNoteForm }) {
+function NoteAddVideo({ note, handleChange, onOpenNoteForm }) {
     return (
         <input
             type="text"
@@ -181,7 +181,7 @@ function NoteEditVideo({ note, handleChange, onOpenNoteForm }) {
     )
 }
 
-function NoteEditTodos({ note, handleChange, onOpenNoteForm }) {
+function NoteAddTodos({ note, handleChange, onOpenNoteForm }) {
     return (
         <input
             type="text"

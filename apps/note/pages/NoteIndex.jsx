@@ -3,7 +3,7 @@ const { Link, useSearchParams } = ReactRouterDOM
 
 import { NoteFilter } from '../cmps/NoteFilter.jsx'
 import { NoteList } from '../cmps/NoteList.jsx'
-import { NoteEdit } from '../cmps/NoteEdit.jsx'
+import { NoteAdd } from '../cmps/NoteAdd.jsx'
 
 import { noteService } from '../services/note.service.js'
 import { Modal } from '../../../cmps/Modal.jsx'
@@ -97,7 +97,7 @@ export function NoteIndex() {
                 setFilterBy={setFilterBy}
                 onClearFilter={onClearFilter} />
 
-            <NoteEdit onSaveNote={onSaveNote} />
+            <NoteAdd onSaveNote={onSaveNote} />
 
             {!notes.length &&
                 <section className="empty-notes">
