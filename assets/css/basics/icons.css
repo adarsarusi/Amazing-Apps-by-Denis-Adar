@@ -39,6 +39,17 @@
 .icon-unread::before { content: 'mark_email_unread'; }
 .icon-edit::before { content: 'edit'; }
 
+/* Notes */
+.icon-palette::before { content: 'palette'; }
+.icon-content_copy::before { content: 'content_copy'; }
+.icon-edit_square::before { content: 'edit_square'; }
+.icon-keep::before { content: 'keep'; }
+.icon-keep_off::before { content: 'keep_off'; }
+.icon-text::before { content: 'text'; }
+.icon-image::before { content: 'image'; }
+.icon-video::before { content: 'video'; }
+.icon-list::before { content: 'list'; }
+
 /* FILLED ICONS */
 
 .icon-fill-trash::before   { content: 'delete'; }
