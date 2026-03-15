@@ -2,7 +2,7 @@
 [class*=" icon-"]::before {
   font-family: 'Material Symbols Outlined';
   font-feature-settings: 'liga';
-
+  font-size: inherit;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -11,9 +11,15 @@
   padding: 0;
   margin: 0;
   vertical-align: middle;
+  font-variation-settings: 'FILL' 0
 }
 
-.icon-delete::before   { content: 'delete'; }
+[class^="icon-fill-"]::before,
+[class*=" icon-fill-"]::before {
+  font-variation-settings: 'FILL' 1;
+}
+
+.icon-trash::before   { content: 'delete'; }
 .icon-home::before     { content: 'home'; }
 .icon-search::before   { content: 'search'; }
 .icon-user::before     { content: 'person'; }
@@ -21,12 +27,35 @@
 .icon-close::before    { content: 'close'; }
 .icon-settings::before { content: 'settings'; }
 .icon-logout::before { content: 'logout'; }
-.icon-palette::before { content: 'palette'; }
-.icon-content_copy::before { content: 'content_copy'; }
-.icon-edit_square::before { content: 'edit_square'; }
-.icon-keep::before { content: 'keep'; }
-.icon-keep_off::before { content: 'keep_off'; }
-.icon-text::before { content: 'text'; }
-.icon-image::before { content: 'image'; }
-.icon-video::before { content: 'video'; }
-.icon-list::before { content: 'list'; }
+.icon-archive::before { content: 'archive'; }
+.icon-spam::before { content: 'report'; }
+.icon-drafts::before { content: 'draft'; }
+.icon-inbox::before { content: 'inbox'; }
+.icon-sent::before { content: 'send'; }
+.icon-starred::before { content: 'star'; }
+.icon-important::before { content: 'label_important'; }
+.icon-tune::before { content: 'tune'; }
+.icon-read::before { content: 'drafts'; }
+.icon-unread::before { content: 'mark_email_unread'; }
+.icon-edit::before { content: 'edit'; }
+
+/* FILLED ICONS */
+
+.icon-fill-trash::before   { content: 'delete'; }
+.icon-fill-home::before     { content: 'home'; }
+.icon-fill-search::before   { content: 'search'; }
+.icon-fill-user::before     { content: 'person'; }
+.icon-fill-check::before    { content: 'check'; }
+.icon-fill-close::before    { content: 'close'; }
+.icon-fill-settings::before { content: 'settings'; }
+.icon-fill-logout::before { content: 'logout'; }
+.icon-fill-archive::before { content: 'archive'; }
+.icon-fill-spam::before { content: 'report'; }
+.icon-fill-drafts::before { content: 'draft'; }
+.icon-fill-inbox::before { content: 'inbox'; }
+.icon-fill-sent::before { content: 'send'; }
+.icon-fill-starred::before { content: 'star'; }
+.icon-fill-important::before { content: 'label_important'; }
+.icon-fill-tune::before { content: 'tune'; }
+.icon-fill-read::before { content: 'drafts'; }
+.icon-fill-unread::before { content: 'mark_email_unread'; }

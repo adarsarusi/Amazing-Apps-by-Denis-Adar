@@ -1,0 +1,44 @@
+/* Mail Folder List */
+
+.mail-folder-list {
+  width: 100%;
+  /* background-color: green; */
+}
+
+.mail-folder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  font-size: 0.875rem;
+
+  width: 100%;
+
+  border-radius: 0 1rem 1rem 0;
+  padding: 0.5em;
+  padding-inline-start: 1em;
+  padding-inline-end: 1em;
+
+  .mail-folder__content {
+    display: flex;
+    gap: 1rem;
+
+    ::before {
+      font-size: 1.25em;
+    }
+
+  }
+
+
+  &:hover {
+    background-color: var(--color-neutral-300);
+    cursor: pointer;
+  }
+
+  &.selected {
+    background-color: var(--color-primary-300);
+    font-weight: 500;
+  }
+}

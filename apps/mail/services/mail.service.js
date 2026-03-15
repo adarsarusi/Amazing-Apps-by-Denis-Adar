@@ -19,8 +19,10 @@ const MAIL_KEY = 'Mail_DB'
 utilService.loadFromStorage(MAIL_KEY) || _createMails(20)
 
 function query(filterBy = {}) {
+  console.log('filterBy: ', filterBy)
   return storageService.query(MAIL_KEY).then((mails) => {
     const {
+      search,
       from,
       to,
       subject,
@@ -28,17 +30,50 @@ function query(filterBy = {}) {
       dontHaveWords,
       dateFrom,
       dateTo,
-      searchCategory,
-      attachments: { isHeld },
+      folder,
+      attachments,
     } = filterBy
-    if (from || hasWords || to || subject) {
-      const regExp = new RegExp(from || hasWords || to || subject, 'i')
-      mails = mail.filter((mail) => regExp.test(mail.from) || regExp.test(mail.to) || regExp.test(mail.subject) || regExp.test(mail.body))
+
+    if (search) {
+      const regExp = new RegExp(search, 'i')
+      mails = mails.filter((mail) =>
+        regExp.test(mail.from) ||
+        regExp.test(mail.to) ||
+        regExp.test(mail.subject) ||
+        regExp.test(mail.body)
+      )
     }
+
+    if (from) {
+      const regExp = new RegExp(from, 'i')
+      mails = mails.filter((mail) => regExp.test(mail.from))
+    }
+    if (to) {
+      const regExp = new RegExp(to, 'i')
+      mails = mails.filter((mail) => regExp.test(mail.to))
+    }
+    if (subject) {
+      const regExp = new RegExp(subject, 'i')
+      mails = mails.filter((mail) => regExp.test(mail.subject))
+    }
+    if (hasWords) {
+      const regExp = new RegExp(hasWords, 'i')
+      mails = mails.filter((mail) =>
+        regExp.test(mail.from) ||
+        regExp.test(mail.to) ||
+        regExp.test(mail.subject) ||
+        regExp.test(mail.body)
+      )
+    }
+
     if (dontHaveWords) {
       const regExp = new RegExp(dontHaveWords, 'i')
       mails = mails.filter(
-        (mail) => !regExp.test(mail.from) && !regExp.test(mail.to) && !regExp.test(mail.subject) && !regExp.test(mail.body)
+        (mail) =>
+          !regExp.test(mail.from) &&
+          !regExp.test(mail.to) &&
+          !regExp.test(mail.subject) &&
+          !regExp.test(mail.body)
       )
     }
     if (dateFrom || dateTo) {
@@ -46,16 +81,14 @@ function query(filterBy = {}) {
       const toDate = new Date(dateTo)
       mails = mails.filter((mail) => fromDate <= mail.createdAt && mail.createdAt <= toDate)
     }
-    if (searchCategory) {
-      mails = mails.filter((mail) => {
-        const { isArchived, isImportant, isStared, isSpam } = mail
-        return (isArchived || isImportant || isStared || isSpam) === searchCategory
-      })
+    if (folder) {
+      mails = mails.filter((mail) => mail[folder])
     }
-    // Attachment isHeld?
-    if (isHeld) mails = mails.filter((mail) => mail.attachments.isHeld)
+    if (attachments && attachments.isHeld) mails = mails.filter((mail) => mail.attachments && mail.attachments.isHeld)
 
+    console.log('mails: ', mails)
     return mails
+
   })
 }
 
@@ -77,6 +110,7 @@ function save(mail) {
 
 function getDefaultFilters(
   filterBy = {
+    search: '',
     from: '',
     to: '',
     subject: '',
@@ -84,7 +118,7 @@ function getDefaultFilters(
     dontHaveWords: '',
     dateFrom: '',
     dateTo: '',
-    searchCategory: '',
+    folder: 'isInbox',
     attachments: {
       isHeld: false,
       files: [],
@@ -92,6 +126,7 @@ function getDefaultFilters(
   }
 ) {
   return {
+    search: '',
     from: filterBy.from,
     to: filterBy.to,
     subject: filterBy.subject,
@@ -99,7 +134,7 @@ function getDefaultFilters(
     dontHaveWords: filterBy.dontHaveWords,
     dateFrom: filterBy.dateFrom,
     dateTo: filterBy.dateTo,
-    searchCategory: filterBy.searchCategory,
+    folder: filterBy.folder,
     attachments: filterBy.attachments,
   }
 }
@@ -117,6 +152,9 @@ function getEmptyMail() {
     isStared: false,
     isImportant: false,
     isSpam: false,
+    isSent: false,
+    isDraft: false,
+    isTrash: false,
     isArchived: false,
     attachments: {
       isHeld: false,
@@ -127,7 +165,6 @@ function getEmptyMail() {
 
 function _setNextPrevMail(mail) {
   return storageService.query(MAIL_KEY).then((mails) => {
-    console.log(mails)
     const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
     const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
     const prevMail = mails[mailIdx - 1] ? mails[mailIdx - 1] : mails[mails.length - 1]
@@ -152,12 +189,15 @@ function _createMails(amount) {
       body: utilService.makeLorem(100),
       pageCount: utilService.getRandomIntInclusive(20, 600),
       labels: lbls[utilService.getRandomIntInclusive[(0, 5)]],
-      isTrash: 0,
+      isInbox: true,
+      isTrash: false,
       isRead: Math.random() < 0.7,
       isStared: false,
-      isImportant: false,
+      isSent: false,
+      isImportant: Math.random() < 0.2,
       isSpam: false,
-      isArchived: false,
+      isArchived: Math.random() < 0.2,
+      isDraft: false,
       attachments: {
         isHeld: Math.random() < 0.7,
         files: [],
@@ -167,3 +207,6 @@ function _createMails(amount) {
   }
   utilService.saveToStorage(MAIL_KEY, mails)
 }
+
+
+
