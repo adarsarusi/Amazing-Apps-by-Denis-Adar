@@ -28,6 +28,8 @@ export function MailFolderList({ filterBy, setFilterBy, mails }) {
     fetchUnreadCount()
   }, [mails])
 
+
+
   function fetchUnreadCount() {
     mailService.query({ folder: 'isInbox' })
       .then(inboxMails => {
@@ -56,15 +58,21 @@ export function MailFolderList({ filterBy, setFilterBy, mails }) {
 }
 
 function MailFolder({ name, filter, handleFolderChange, filterBy: { folder }, inboxUnread }) {
+
+  const isFolder = folder.toLowerCase().includes(name)
+
   return (
-    <button
+    <a
       onClick={() => handleFolderChange(filter)}
-      className={`mail-folder ${folder.toLowerCase().includes(name) ? 'selected' : ''}`}
+      className={`mail-folder ${isFolder ? 'selected' : ''}`}
     >
-      <span className={`mail-folder__icon icon-${name}`}></span>
-      {utilService.toCap(name)}
+      <div className='mail-folder__content'>
+        <span className={`mail-folder__icon ${isFolder ? `icon-fill-${name}` : `icon-${name}`}`}></span>
+        {utilService.toCap(name)}
+      </div>
+
       {name === 'inbox' && <span>{inboxUnread}</span>}
-    </button>
+    </a>
   )
 }
 

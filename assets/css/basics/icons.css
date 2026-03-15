@@ -35,9 +35,27 @@
 .icon-starred::before { content: 'star'; }
 .icon-important::before { content: 'label_important'; }
 .icon-tune::before { content: 'tune'; }
-.icon-read::before { content: 'mark_email_read'; }
+.icon-read::before { content: 'drafts'; }
+.icon-unread::before { content: 'mark_email_unread'; }
+.icon-edit::before { content: 'edit'; }
 
 /* FILLED ICONS */
 
+.icon-fill-trash::before   { content: 'delete'; }
+.icon-fill-home::before     { content: 'home'; }
+.icon-fill-search::before   { content: 'search'; }
+.icon-fill-user::before     { content: 'person'; }
+.icon-fill-check::before    { content: 'check'; }
+.icon-fill-close::before    { content: 'close'; }
+.icon-fill-settings::before { content: 'settings'; }
+.icon-fill-logout::before { content: 'logout'; }
+.icon-fill-archive::before { content: 'archive'; }
+.icon-fill-spam::before { content: 'report'; }
+.icon-fill-drafts::before { content: 'draft'; }
+.icon-fill-inbox::before { content: 'inbox'; }
+.icon-fill-sent::before { content: 'send'; }
 .icon-fill-starred::before { content: 'star'; }
 .icon-fill-important::before { content: 'label_important'; }
+.icon-fill-tune::before { content: 'tune'; }
+.icon-fill-read::before { content: 'drafts'; }
+.icon-fill-unread::before { content: 'mark_email_unread'; }

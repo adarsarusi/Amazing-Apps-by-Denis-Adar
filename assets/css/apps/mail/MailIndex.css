@@ -2,9 +2,10 @@
 
 
  .mail-index {
+     overflow: hidden;
+
      height: 100vh;
      display: grid;
-     /* align-items: start; */
      grid-template-columns: 15rem 1fr;
      grid-template-rows: 5rem 1fr;
      grid-template-areas:
@@ -14,18 +15,25 @@
 
 
      .mail-folder-list {
+         overflow: scroll;
          grid-area: sidebar;
          align-self: start;
      }
 
      .mail-filter {
+
          grid-area: filter;
          align-self: center;
      }
 
-     .mail-list {
+     .mail-container {
          grid-area: main;
          align-self: start;
+     }
+
+     .mail-container__list {
+         overflow: scroll;
+         height: 100vh;
      }
 
      background-color: var(--color-primary-50);

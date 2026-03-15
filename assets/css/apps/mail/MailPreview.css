@@ -30,8 +30,6 @@
     box-shadow: var(--shadow-mail-default-top);
   }
 
-
-
   &:hover {
     .mail-preview__actions__right {
       display: flex;
@@ -96,12 +94,15 @@
   flex-direction: row;
   justify-content: space-between;
 
-
   height: 100%;
   width: 100%;
 
   padding: 0 0.625rem;
-  box-shadow: var(--shadow-mail-hover);
+
+  &:hover {
+    box-shadow: var(--shadow-mail-hover);
+
+  }
 }
 
 .mail-preview__actions__left {

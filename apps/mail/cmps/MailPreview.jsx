@@ -4,8 +4,6 @@ import { utilService } from '../../../services/util.service.js'
 export function MailPreview({ mail, onAction }) {
   return (
     <div className={`mail-preview ${mail.isRead ? 'isRead' : ''}`}>
-
-
       <p className="mail-preview__name">{mail.name}</p>
       <p className="mail-preview__text">
         <span className="mail-preview__subject">{mail.subject}</span>
@@ -27,7 +25,7 @@ export function MailPreview({ mail, onAction }) {
         <div className='mail-preview__actions__right'>
           <button className='mail-actions__button icon-archive' onClick={() => onAction(mail.id, 'archive')}></button>
           <button className='mail-actions__button icon-trash' onClick={() => onAction(mail.id, 'remove')}></button>
-          <button className='mail-actions__button icon-read' onClick={() => onAction(mail.id, 'read')}></button>
+          <button className={`mail-actions__button ${mail.isRead ? 'icon-unread' : 'icon-read'}`} onClick={() => onAction(mail.id, 'read')}></button>
         </div>
 
       </div>
