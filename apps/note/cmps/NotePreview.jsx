@@ -3,10 +3,16 @@ export function NotePreview({ note, onToggleTodo }) {
 
     return <article className="note-preview">
         <h2>{note.info.title}</h2>
-        {/* <p className="note-text">{note.info.txt}</p> */}
         <PreviewCmp note={note}
             onToggleTodo={onToggleTodo} />
     </article>
+}
+
+function getYoutubeEmbedUrl(url) {
+    const match = url.match(/(?:v=|youtu\.be\/)([^&]+)/)
+    return match
+        ? `https://www.youtube.com/embed/${match[1]}`
+        : url
 }
 
 function getPreviewCmp(type) {
@@ -33,9 +39,17 @@ function NoteImgPreview({ note }) {
 }
 
 function NoteVideoPreview({ note }) {
-    return <iframe className="video-player"
-        src={note.info.url}
-    ></iframe>
+
+    const embedUrl = getYoutubeEmbedUrl(note.info.url)
+
+    return (
+        <iframe
+            className="video-player"
+            src={embedUrl}
+            frameBorder="0"
+            allowFullScreen
+        ></iframe>
+    )
 }
 
 function NoteTodosPreview({ note, onToggleTodo }) {
