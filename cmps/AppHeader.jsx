@@ -48,7 +48,7 @@ export function AppHeader({ filterBy, setFilterBy }) {
 
       <img className="app-header__logo" src={logo} />
 
-      <MailFilter filterBy={filterBy} setFilterBy={setFilterBy} />
+      {(pageName !== '/') && <MailFilter filterBy={filterBy} setFilterBy={setFilterBy} />}
 
       <nav className="app-header__nav">
         <NavLink to="/"><button className="app-header__nav-button icon-home u-icon-center"></button></NavLink>
