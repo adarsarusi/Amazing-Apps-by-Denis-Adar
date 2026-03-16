@@ -86,6 +86,16 @@
      position: fixed;
  }
 
+ .modal-color{
+    width: 320px;
+    padding: 16px;
+ }
+
+ .modal-edit{
+    width: 70vw;
+ }
+ 
+
  .btn-close {
      position: absolute;
      top: 8px;

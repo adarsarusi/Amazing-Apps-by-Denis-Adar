@@ -58,6 +58,7 @@
 .icon-image::before { content: 'image'; }
 .icon-video::before { content: 'video'; }
 .icon-list::before { content: 'list'; }
+.icon-delete::before   { content: 'delete'; }
 
 /* FILLED ICONS */
 

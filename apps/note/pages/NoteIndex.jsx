@@ -5,6 +5,7 @@ import { NoteFilter } from '../cmps/NoteFilter.jsx'
 import { NoteList } from '../cmps/NoteList.jsx'
 import { NoteAdd } from '../cmps/NoteAdd.jsx'
 import { AppHeader } from '../../../cmps/AppHeader.jsx'
+import { NoteEdit } from '../cmps/NoteEdit.jsx'
 
 import { noteService } from '../services/note.service.js'
 import { Modal } from '../../../cmps/Modal.jsx'
@@ -82,8 +83,13 @@ export function NoteIndex() {
     function onSaveNote(noteToSave) {
         noteService.save(noteToSave)
             .then(savedNote => {
-                setNotes(prevNotes => [savedNote, ...prevNotes])
-                showSuccessMsg(`${savedNote.info.title} Noted!`)
+                setNotes(prevNotes =>
+                    prevNotes.some(n => n.id === savedNote.id)
+                        ? prevNotes.map(n => n.id === savedNote.id ? savedNote : n)
+                        : [savedNote, ...prevNotes]
+                )
+
+                showSuccessMsg(`${savedNote.info.title} saved!`)
             })
     }
 
@@ -99,7 +105,7 @@ export function NoteIndex() {
                 setFilterBy={setFilterBy}
                 onClearFilter={onClearFilter} />
 
-            <NoteAdd onSaveNote={onSaveNote} />
+            <NoteEdit onSaveNote={onSaveNote} />
 
             {!notes.length &&
                 <section className="empty-notes">
@@ -116,7 +122,8 @@ export function NoteIndex() {
                         onPinNote={onPinNote}
                         onDuplicateNote={onDuplicateNote}
                         onChangeColor={onChangeColor}
-                        onToggleTodo={onToggleTodo} />
+                        onToggleTodo={onToggleTodo}
+                        onSaveNote={onSaveNote} />
                 </section>
             )}
 
@@ -127,7 +134,8 @@ export function NoteIndex() {
                     onPinNote={onPinNote}
                     onDuplicateNote={onDuplicateNote}
                     onChangeColor={onChangeColor}
-                    onToggleTodo={onToggleTodo} />
+                    onToggleTodo={onToggleTodo}
+                    onSaveNote={onSaveNote} />
             </section>
         </React.Fragment>
     </section>

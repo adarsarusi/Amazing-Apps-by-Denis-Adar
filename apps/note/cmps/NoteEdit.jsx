@@ -1,13 +1,24 @@
 const { useState, useEffect, useRef } = React
 import { noteService } from '../services/note.service.js'
 
-export function NoteAdd({ onSaveNote }) {
+export function NoteEdit({ note = null, onSaveNote }) {
 
-    const [noteToEdit, setNoteToEdit] = useState(noteService.getEmptyNote())
-    const [isNoting, setIsNoting] = useState(false)
+    const [noteToEdit, setNoteToEdit] = useState(
+        note ? { ...note } : noteService.getEmptyNote()
+    )
+
+    const [isNoting, setIsNoting] = useState(!!note)
     const noteFormRef = useRef(null)
 
     const EditorCmp = getEditorCmp(noteToEdit.type)
+
+    // When editing another note in modal
+    useEffect(() => {
+        if (note) {
+            setNoteToEdit({ ...note })
+            setIsNoting(true)
+        }
+    }, [note])
 
     useEffect(() => {
         function handleClickOutside(ev) {
@@ -53,10 +64,7 @@ export function NoteAdd({ onSaveNote }) {
                 return { title: '', url: '' }
 
             case 'NoteTodos':
-                return {
-                    title: '',
-                    todos: []
-                }
+                return { title: '', todos: '' }
 
             default:
                 return { title: '', txt: '' }
@@ -73,7 +81,7 @@ export function NoteAdd({ onSaveNote }) {
                 .split(',')
                 .map(txt => txt.trim())
                 .filter(Boolean)
-                .map(txt => ({ txt, isDone: false }))
+                .map(txt => ({ txt, doneAt: null }))
         }
 
         onSaveNote(noteToSave)
@@ -107,23 +115,25 @@ export function NoteAdd({ onSaveNote }) {
                 />
             </div>
 
-            {isNoting && <div className="note-controls">
+            {isNoting &&
+                <div className="note-controls">
 
-                <img onClick={() => changeType('NoteTxt')}
-                    src="apps\note\imgs\types\NoteTxt.png" alt="" />
+                    <img onClick={() => changeType('NoteTxt')}
+                        src="apps/note/imgs/types/NoteTxt.png" />
 
-                <img onClick={() => changeType('NoteImg')}
-                    src="apps\note\imgs\types\NoteImg.png" alt="" />
+                    <img onClick={() => changeType('NoteImg')}
+                        src="apps/note/imgs/types/NoteImg.png" />
 
-                <img onClick={() => changeType('NoteVideo')}
-                    src="apps\note\imgs\types\NoteVideo.png" alt="" />
+                    <img onClick={() => changeType('NoteVideo')}
+                        src="apps/note/imgs/types/NoteVideo.png" />
 
-                <img onClick={() => changeType('NoteTodos')}
-                    src="apps\note\imgs\types\NoteTodos.png" alt="" />
+                    <img onClick={() => changeType('NoteTodos')}
+                        src="apps/note/imgs/types/NoteTodos.png" />
 
-                <button className="save-btn">Save</button>
+                    <button className="save-btn">Save</button>
 
-            </div>}
+                </div>
+            }
         </form>
     )
 }
@@ -131,19 +141,19 @@ export function NoteAdd({ onSaveNote }) {
 function getEditorCmp(type) {
     switch (type) {
         case 'NoteTxt':
-            return NoteAddTxt
+            return NoteEditTxt
         case 'NoteImg':
-            return NoteAddImg
+            return NoteEditImg
         case 'NoteVideo':
-            return NoteAddVideo
+            return NoteEditVideo
         case 'NoteTodos':
-            return NoteAddTodos
+            return NoteEditTodos
         default:
-            return NoteAddTxt
+            return NoteEditTxt
     }
 }
 
-function NoteAddTxt({ note, handleChange, onOpenNoteForm }) {
+function NoteEditTxt({ note, handleChange, onOpenNoteForm }) {
     return (
         <textarea
             name="txt"
@@ -155,7 +165,7 @@ function NoteAddTxt({ note, handleChange, onOpenNoteForm }) {
     )
 }
 
-function NoteAddImg({ note, handleChange, onOpenNoteForm }) {
+function NoteEditImg({ note, handleChange, onOpenNoteForm }) {
     return (
         <input
             type="text"
@@ -168,7 +178,7 @@ function NoteAddImg({ note, handleChange, onOpenNoteForm }) {
     )
 }
 
-function NoteAddVideo({ note, handleChange, onOpenNoteForm }) {
+function NoteEditVideo({ note, handleChange, onOpenNoteForm }) {
     return (
         <input
             type="text"
@@ -181,7 +191,7 @@ function NoteAddVideo({ note, handleChange, onOpenNoteForm }) {
     )
 }
 
-function NoteAddTodos({ note, handleChange, onOpenNoteForm }) {
+function NoteEditTodos({ note, handleChange, onOpenNoteForm }) {
     return (
         <input
             type="text"
