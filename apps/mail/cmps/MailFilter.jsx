@@ -4,6 +4,8 @@ const { useState, useEffect } = React
 
 export function MailFilter({ filterBy, setFilterBy }) {
 
+  console.log('filterBy: ', filterBy)
+  
   const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
 
   function handleChange(ev) {
@@ -34,10 +36,10 @@ export function MailFilter({ filterBy, setFilterBy }) {
       </div>
       <input
         className="mail-filter__input"
-        value={filterByToEdit.search}
+        value={filterByToEdit.txt}
         onChange={ev => handleChange(ev)}
         placeholder='Search mail'
-        name='search'
+        name='txt'
         type='text'
       />
     </div>

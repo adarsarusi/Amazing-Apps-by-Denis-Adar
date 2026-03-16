@@ -4,6 +4,7 @@ const { Link, useSearchParams } = ReactRouterDOM
 import { NoteFilter } from '../cmps/NoteFilter.jsx'
 import { NoteList } from '../cmps/NoteList.jsx'
 import { NoteAdd } from '../cmps/NoteAdd.jsx'
+import { AppHeader } from '../../../cmps/AppHeader.jsx'
 
 import { noteService } from '../services/note.service.js'
 import { Modal } from '../../../cmps/Modal.jsx'
@@ -91,6 +92,7 @@ export function NoteIndex() {
     }
 
     return <section className="container">
+        <AppHeader filterBy={filterBy} setFilterBy={setFilterBy} />
         <React.Fragment>
             <NoteFilter
                 filterBy={filterBy}

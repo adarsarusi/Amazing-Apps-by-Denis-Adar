@@ -1,16 +1,95 @@
 .app-header {
-    display: flex;
+    position: relative;
+
+    display: grid;
+    grid-auto-flow: column;
     justify-content: space-between;
+    align-items: center;
+
     padding: 1em;
-    background: var(--bg1);
+    background-color: var(--color-primary-50);
 }
 
-nav a {
-    margin: .5em;
+
+.app-header__nav-button {
+    font-size: 1.6rem;
+
+    width: 2.5rem;
+    height: 2.5rem;
+
+    padding: 0.5em;
+    border-radius: 50%;
+
+    margin: 0;
+
+    &:hover {
+        background-color: var(--color-neutral-200);
+    }
 }
 
-nav a.active {
-    color: var(--color1);
-    font-weight: bold;
-    text-decoration: overline;
+.app-header__app-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    width: 6rem;
+
+    .app-header__app-icon {
+        width: 3.125rem;
+    }
+
+    font-size: 1rem;
+
+    padding: 0.5em;
+    border-radius: 1rem;
+
+    &:hover {
+        background-color: var(--color-neutral-200);
+    }
+}
+
+.app-header__apps-container {
+    z-index: 100;
+    position: absolute;
+    right: 15px;
+    top: 4rem;
+
+    &.hide {
+        display: none;
+    }
+
+    border-radius: 2rem;
+    padding: 1rem;
+    background-color: var(--color-primary-100);
+
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+
+.app-header__apps {
+    display: grid;
+    grid-template-columns: minmax(20px, auto) 1fr 1fr;
+
+
+    border-radius: 1.5rem;
+    padding: 1rem;
+    background-color: var(--color-primary-50);
+    box-shadow: rgba(196, 196, 196, 0.05) 0px 6px 24px 0px,
+        rgba(205, 205, 205, 0.08) 0px 0px 0px 1px;
+}
+
+.app-header__logo {
+    height: 4em;
+}
+
+.app-header__nav {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: start;
+    justify-content: center;
+
+    gap: 0.5rem;
 }

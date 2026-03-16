@@ -7,9 +7,8 @@
      height: 100vh;
      display: grid;
      grid-template-columns: 15rem 1fr;
-     grid-template-rows: 5rem 1fr;
      grid-template-areas:
-         "filter filter"
+         "app-header app-header"
          "sidebar main"
          "sidebar main";
 
@@ -18,11 +17,12 @@
          overflow: scroll;
          grid-area: sidebar;
          align-self: start;
+
+         
      }
 
-     .mail-filter {
-
-         grid-area: filter;
+     .app-header {
+         grid-area: app-header;
          align-self: center;
      }
 

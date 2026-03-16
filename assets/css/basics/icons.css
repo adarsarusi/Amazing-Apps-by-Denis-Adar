@@ -19,6 +19,15 @@
   font-variation-settings: 'FILL' 1;
 }
 
+
+/* Global */
+.icon-apps::before   { content: 'apps'; }
+.icon-refresh::before   { content: 'refresh'; }
+.icon-account::before   { content: 'account_circle'; }
+.icon-home::before   { content: 'home'; }
+
+
+/* Mail */
 .icon-trash::before   { content: 'delete'; }
 .icon-home::before     { content: 'home'; }
 .icon-search::before   { content: 'search'; }

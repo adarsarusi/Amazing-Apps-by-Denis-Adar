@@ -16,13 +16,13 @@ const loggedinUser = {
 }
 
 const MAIL_KEY = 'Mail_DB'
-utilService.loadFromStorage(MAIL_KEY) || _createMails(20)
+utilService.loadFromStorage(MAIL_KEY) || _createMails(40)
 
 function query(filterBy = {}) {
   console.log('filterBy: ', filterBy)
   return storageService.query(MAIL_KEY).then((mails) => {
     const {
-      search,
+      txt,
       from,
       to,
       subject,
@@ -34,8 +34,8 @@ function query(filterBy = {}) {
       attachments,
     } = filterBy
 
-    if (search) {
-      const regExp = new RegExp(search, 'i')
+    if (txt) {
+      const regExp = new RegExp(txt, 'i')
       mails = mails.filter((mail) =>
         regExp.test(mail.from) ||
         regExp.test(mail.to) ||
@@ -110,7 +110,7 @@ function save(mail) {
 
 function getDefaultFilters(
   filterBy = {
-    search: '',
+    txt: '',
     from: '',
     to: '',
     subject: '',
@@ -126,7 +126,7 @@ function getDefaultFilters(
   }
 ) {
   return {
-    search: '',
+    txt: '',
     from: filterBy.from,
     to: filterBy.to,
     subject: filterBy.subject,
@@ -194,7 +194,7 @@ function _createMails(amount) {
       isRead: Math.random() < 0.7,
       isStared: false,
       isSent: false,
-      isImportant: Math.random() < 0.2,
+      isImportant: Math.random() < 0.3,
       isSpam: false,
       isArchived: Math.random() < 0.2,
       isDraft: false,
