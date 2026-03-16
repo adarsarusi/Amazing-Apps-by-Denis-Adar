@@ -1,9 +1,18 @@
 import { NotePreview } from '../cmps/NotePreview.jsx'
+import { NoteEdit } from '../cmps/NoteEdit.jsx'
 import { Modal } from '../../../cmps/Modal.jsx'
 
-const { useState, useEffect } = React
+const { useState } = React
 
-export function NoteList({ notes, onRemoveNote, onPinNote, onDuplicateNote, onChangeColor, onToggleTodo }) {
+export function NoteList({
+    notes,
+    onRemoveNote,
+    onPinNote,
+    onDuplicateNote,
+    onChangeColor,
+    onToggleTodo,
+    onSaveNote
+}) {
 
     const colors = [
         { name: 'Coral', color: '#faafa8' },
@@ -18,68 +27,123 @@ export function NoteList({ notes, onRemoveNote, onPinNote, onDuplicateNote, onCh
         { name: 'Clay', color: '#e9e3d4' }
     ]
 
+    const [modalMode, setModalMode] = useState(null)
     const [selectedNoteId, setSelectedNoteId] = useState(null)
 
-    const isShown = selectedNoteId !== null
+    const isShown = modalMode !== null
 
-    function onOpenModal(noteId) {
+    function openColorModal(noteId) {
         setSelectedNoteId(noteId)
+        setModalMode('color')
+    }
+
+    function openEditModal(noteId) {
+        setSelectedNoteId(noteId)
+        setModalMode('edit')
     }
 
     function onCloseModal() {
+        setModalMode(null)
         setSelectedNoteId(null)
     }
 
-    return <section className="">
-        <ul className="notes-list clean-list">
-            {notes.map(note => (
-                <li key={note.id}
-                    style={{ backgroundColor: note.style.backgroundColor }}>
-                    <NotePreview note={note}
-                        onToggleTodo={onToggleTodo} />
-                    <div className="actions">
+    const noteToEdit = notes.find(note => note.id === selectedNoteId)
 
-                        <div onClick={() => onOpenModal(note.id)}
-                            className="icon-palette"></div>
+    return (
+        <section>
 
-                        <div onClick={() => onPinNote(note.id)}
-                            className={` ${note.isPinned ? 'icon-keep_off' : 'icon-keep'}`}></div>
+            <ul className="notes-list clean-list">
+                {notes.map(note => (
+                    <li
+                        key={note.id}
+                        style={{ backgroundColor: note.style.backgroundColor }}
+                    >
 
-                        <div className="icon-edit_square"></div>
+                        <NotePreview
+                            note={note}
+                            onToggleTodo={onToggleTodo}
+                        />
 
-                        <div onClick={() => onDuplicateNote(note.id)}
-                            className="icon-content_copy"></div>
+                        <div className="actions">
 
-                        <div onClick={() => onRemoveNote(note.id)}
-                            className="icon-delete"></div>
+                            <div
+                                onClick={() => openColorModal(note.id)}
+                                className="icon-palette">
+                            </div>
 
-                    </div>
-                </li>
-            ))}
-        </ul>
+                            <div
+                                onClick={() => onPinNote(note.id)}
+                                className={`${note.isPinned ? 'icon-keep_off' : 'icon-keep'}`}>
+                            </div>
 
-        <Modal
-            isShown={isShown}
-            onClose={onCloseModal}>
+                            <div
+                                onClick={() => openEditModal(note.id)}
+                                className="icon-edit_square">
+                            </div>
 
-            <h3>Pick a Color:</h3>
-            <div role="listbox" className="color-listbox">
-                {colors.map(color => (
-                    <div
-                        key={color.name}
-                        role="option"
-                        title={color.name}
-                        className="color-option"
-                        style={{ backgroundColor: color.color }}
-                        onClick={() => {
-                            onChangeColor(selectedNoteId, color.color)
-                            console.log(selectedNoteId)
-                            onCloseModal()
-                        }}
-                    ></div>
+                            <div
+                                onClick={() => onDuplicateNote(note.id)}
+                                className="icon-content_copy">
+                            </div>
+
+                            <div
+                                onClick={() => onRemoveNote(note.id)}
+                                className="icon-delete">
+                            </div>
+
+                        </div>
+
+                    </li>
                 ))}
-            </div>
+            </ul>
 
-        </Modal>
-    </section>
+
+            <Modal
+                isShown={isShown}
+                onClose={onCloseModal}
+                className={modalMode === 'color' ? 'modal-color' : 'modal-edit'}
+            >
+
+                {/* COLOR PICKER */}
+                {modalMode === 'color' && (
+                    <React.Fragment>
+                        <h3>Pick a Color:</h3>
+
+                        <div role="listbox" className="color-listbox">
+                            {colors.map(color => (
+                                <div
+                                    key={color.name}
+                                    role="option"
+                                    title={color.name}
+                                    className="color-option"
+                                    style={{ backgroundColor: color.color }}
+                                    onClick={() => {
+                                        onChangeColor(selectedNoteId, color.color)
+                                        onCloseModal()
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    </React.Fragment>
+                )}
+
+                {/* EDIT NOTE */}
+                {modalMode === 'edit' && noteToEdit && (
+                    <React.Fragment>
+                        <h3>Edit Note</h3>
+
+                        <NoteEdit
+                            note={noteToEdit}
+                            onSaveNote={(updatedNote) => {
+                                onSaveNote(updatedNote)
+                                onCloseModal()
+                            }}
+                        />
+                    </React.Fragment>
+                )}
+
+            </Modal>
+
+        </section>
+    )
 }

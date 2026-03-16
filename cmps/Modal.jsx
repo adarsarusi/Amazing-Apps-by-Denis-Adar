@@ -1,6 +1,6 @@
 const { useRef, useEffect } = React
 
-export function Modal({ isShown, onClose = null, children }) {
+export function Modal({ isShown, onClose = null, children, className = ''}) {
 	const dialogRef = useRef(null)
 
 	useEffect(() => {
@@ -17,7 +17,7 @@ export function Modal({ isShown, onClose = null, children }) {
             closedby="any"
             ref={dialogRef}
             onCancel={onCloseModal} 
-            className="modal">
+            className={`modal ${className}`}>
 
                 { children }
 

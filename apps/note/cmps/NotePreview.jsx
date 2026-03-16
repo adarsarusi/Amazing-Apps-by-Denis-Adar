@@ -52,7 +52,12 @@ function NoteVideoPreview({ note }) {
     )
 }
 
-function NoteTodosPreview({ note, onToggleTodo }) {
+function NoteTodosPreview({ note, onToggleTodo, isEditable }) {
+
+    if (isEditable){
+        return 
+    }
+
     return <ul>
         {note.info.todos.map((todo, idx) => (
             <li key={idx}

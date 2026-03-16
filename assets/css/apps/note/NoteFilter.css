@@ -5,7 +5,7 @@
     justify-content: space-between;
 
     >img {
-        width: 50px;
+        width: 40px;
 
         opacity: 0.5;
         transition: 200ms;
