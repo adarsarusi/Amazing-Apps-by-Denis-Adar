@@ -1,26 +1,29 @@
  /* note index */
 
- .container{
-    text-align: center;
+ .container {
+     overflow: scroll;
+     overflow-x: hidden;
 
-    background-color: #f8fafd;
+     height: 100vh;
 
-    overflow: scroll;
-    height: 100vh;
+     text-align: center;
+     background-color: var(--color-primary-50);
 
-    >.empty-notes{
-        >img{
-            width: 250px;
-        }
+     padding-block-end: 5rem;
 
-        >p{
-            font-size: 1.8em;
-        }
-    }
+     >.empty-notes {
+         >img {
+             width: 250px;
+         }
+
+         >p {
+             font-size: 1.8em;
+         }
+     }
  }
 
- .empty-notes{
-    >img{
-        display: inline-block;
-    }
+ .empty-notes {
+     >img {
+         display: inline-block;
+     }
  }

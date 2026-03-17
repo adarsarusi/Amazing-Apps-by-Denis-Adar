@@ -1,10 +1,6 @@
  /* mail index  */
-
-
  .mail-index {
      overflow: hidden;
-
-     height: 100vh;
      display: grid;
      grid-template-columns: 15rem 1fr;
      grid-template-rows: auto auto 1fr;
@@ -16,7 +12,7 @@
 
 
      .mail-folder-list {
-         overflow: scroll;
+         overflow-y: scroll;
          grid-area: sidebar;
          align-self: start;
      }
@@ -32,8 +28,10 @@
      }
 
      .mail-container__list {
-         overflow: scroll;
+         overflow-y: auto;
+         overflow-x: hidden;
          height: 100vh;
+         padding-block-end: 3em;
      }
 
      .mail-compose__button {

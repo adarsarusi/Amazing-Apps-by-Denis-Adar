@@ -1,11 +1,11 @@
+
 body {
-  margin: 0;
   font-size: 14px;
   font-weight: normal;
-  height: 100vh;
+  height: 100%;
+  margin: 0;
   overflow: hidden;
-
-  margin-block-start: 120px;
+  background-color: var(--color-primary-50);
 }
 
 body,

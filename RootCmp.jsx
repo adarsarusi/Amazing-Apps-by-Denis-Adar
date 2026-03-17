@@ -11,6 +11,8 @@ import { AppHeader } from './cmps/AppHeader.jsx'
 
 export function RootCmp() {
 
+  const listContainer = document.getElementById('myList');
+  _scrollToBottom()
 
   return (
     <Router>
@@ -25,4 +27,8 @@ export function RootCmp() {
       </section>
     </Router>
   )
+}
+
+function _scrollToBottom() {
+  listContainer.scrollTop = listContainer.scrollHeight;
 }

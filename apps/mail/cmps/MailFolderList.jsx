@@ -18,22 +18,28 @@ const folderList = [
 
 export function MailFolderList({ filterBy, setFilterBy, mails, setOnCompose }) {
 
-  const [inboxUnread, setInboxUnread] = useState(0)
+  const [mailCount, setMailCount] = useState({ draftCount: 0, unreadCount: 0 })
 
   function handleFolderChange(filter) {
     setFilterBy(prevFilters => ({ ...prevFilters, folder: filter }))
   }
 
   useEffect(() => {
-    fetchUnreadCount()
+    fetchMailCount()
   }, [mails])
 
 
-  function fetchUnreadCount() {
+  function fetchMailCount() {
     mailService.query({ folder: 'isInbox' })
-      .then(inboxMails => {
-        const unreadCount = inboxMails.filter(mail => !mail.isRead).length
-        setInboxUnread(unreadCount)
+      .then(unreadMails => {
+        const unreadCount = unreadMails.filter(mail => !mail.isRead).length
+        setMailCount(prevCounts => ({ ...prevCounts, unreadCount }))
+      })
+
+    mailService.query({ folder: 'isDraft' })
+      .then(draftMails => {
+        const draftCount = draftMails.filter(mail => !mail.isDraft).length
+        setMailCount(prevCounts => ({ ...prevCounts, draftCount }))
       })
   }
 
@@ -50,7 +56,7 @@ export function MailFolderList({ filterBy, setFilterBy, mails, setOnCompose }) {
                 filter={folder.filter}
                 handleFolderChange={handleFolderChange}
                 filterBy={filterBy}
-                inboxUnread={inboxUnread}
+                mailCount={mailCount}
               />
             </li>
           ))}
@@ -60,7 +66,7 @@ export function MailFolderList({ filterBy, setFilterBy, mails, setOnCompose }) {
   )
 }
 
-function MailFolder({ name, filter, handleFolderChange, filterBy: { folder }, inboxUnread }) {
+function MailFolder({ name, filter, handleFolderChange, filterBy: { folder }, mailCount: { draftCount, unreadCount } }) {
 
   const isFolder = folder.toLowerCase().includes(name)
 
@@ -73,8 +79,8 @@ function MailFolder({ name, filter, handleFolderChange, filterBy: { folder }, in
         <span className={`mail-folder__icon ${isFolder ? `icon-fill-${name}` : `icon-${name}`}`}></span>
         {utilService.toCap(name)}
       </div>
-
-      {name === 'inbox' && <span>{inboxUnread}</span>}
+      {name === 'inbox' && unreadCount !== 0 && <span>{unreadCount}</span>}
+      {name === 'draft' && draftCount !== 0 && <span>{draftCount}</span>}
     </a>
   )
 }

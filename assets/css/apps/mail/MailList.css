@@ -1,14 +1,13 @@
-.mail-list{
+.mail-list {}
+
+.mail-container {
+   border-radius: 2rem 0 0 0 ;
+   background-color: var(--white0);
+   margin-inline-start: 1rem;
 }
 
-.mail-container{
-    border-radius: 2rem;
-    background-color: var(--white0);
-    margin-inline-start: 1rem;
- }
-
- .mail-container__filter{
-    padding: 0.625em;
-    width: 100%;
-    height: 2.5rem;
- }
+.mail-container__filter {
+   padding: 0.625em;
+   width: 100%;
+   height: 2.5rem;
+}
