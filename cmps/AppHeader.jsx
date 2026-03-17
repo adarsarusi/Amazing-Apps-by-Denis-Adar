@@ -13,8 +13,11 @@ export function AppHeader({ filterBy, setFilterBy }) {
   const location = useLocation()
   const pageName = location.pathname
 
+<<<<<<< HEAD
   const { appLogo, storageDb } = _onAppChange(pageName)
 
+=======
+>>>>>>> f/Note/queryParams
   function openAppsDrawer(state) {
     inputRef.current = stateApps
     setStateApps(state)

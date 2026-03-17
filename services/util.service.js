@@ -11,6 +11,7 @@ export const utilService = {
   toCap,
   makeRandomUsers,
   makeDate,
+  trimObj
 }
 
 function saveToStorage(key, val) {
@@ -191,4 +192,13 @@ function makeDate() {
   const randomMs = startMs + Math.random() * (endMs - startMs)
 
   return randomMs
+}
+
+function trimObj(obj) {
+    const trimmedObj = {}
+
+    for (const key in obj) {
+        if (obj[key]) trimmedObj[key] = obj[key]
+    }
+    return trimmedObj
 }
