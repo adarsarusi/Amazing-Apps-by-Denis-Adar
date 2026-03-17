@@ -14,14 +14,18 @@ import { utilService } from '../../../services/util.service.js'
 
 export function NoteIndex() {
 
+    const [ searchParams, setSearchParams ] = useSearchParams()
     const [notes, setNotes] = useState([])
-    const [filterBy, setFilterBy] = useState({ txt: '' })
+    const [ filterBy, setFilterBy ] = 
+        useState(noteService.getFilterFromSearchParams(searchParams))
 
     const pinnedNotes = notes.filter(note => note.isPinned)
     const unpinnedNotes = notes.filter(note => !note.isPinned)
 
     useEffect(() => {
         loadNotes()
+        setSearchParams(utilService.trimObj(filterBy))
+
     }, [filterBy])
 
     function loadNotes() {

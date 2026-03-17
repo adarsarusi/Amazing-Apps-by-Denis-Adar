@@ -3,8 +3,6 @@ const { useState, useEffect } = React
 
 
 export function MailFilter({ filterBy, setFilterBy }) {
-
-  console.log('filterBy: ', filterBy)
   
   const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
 

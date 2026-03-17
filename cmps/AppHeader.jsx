@@ -22,8 +22,6 @@ export function AppHeader({ filterBy, setFilterBy }) {
   const location = useLocation()
   const pageName = location.pathname
 
-  console.log('pageName: ', pageName)
-
   function openAppsDrawer(state) {
     inputRef.current = stateApps
     setStateApps(state)

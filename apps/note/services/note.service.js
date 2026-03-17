@@ -59,7 +59,8 @@ export const noteService = {
     remove,
     save,
     getEmptyNote,
-    getDefaultFilter
+    getDefaultFilter,
+    getFilterFromSearchParams
 }
 
 function query(filterBy = {}) {
@@ -118,6 +119,16 @@ function getDefaultFilter() {
         txt: '',
         type: ''
     }
+}
+
+function getFilterFromSearchParams(searchParams) {
+    const defaultFilter = getDefaultFilter()
+    const filterBy = {}
+
+    for (const field in defaultFilter) {
+        filterBy[field] = searchParams.get(field) || ''
+    }
+    return filterBy
 }
 
 function _makeLorem(size = 100) {
