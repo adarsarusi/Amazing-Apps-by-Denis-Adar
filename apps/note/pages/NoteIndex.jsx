@@ -1,5 +1,5 @@
 const { useState, useEffect } = React
-const { Link, useSearchParams } = ReactRouterDOM
+const { useSearchParams } = ReactRouterDOM
 
 import { NoteFilter } from '../cmps/NoteFilter.jsx'
 import { NoteList } from '../cmps/NoteList.jsx'
@@ -14,13 +14,31 @@ import { utilService } from '../../../services/util.service.js'
 
 export function NoteIndex() {
 
-    const [ searchParams, setSearchParams ] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()
     const [notes, setNotes] = useState([])
-    const [ filterBy, setFilterBy ] = 
+    const [filterBy, setFilterBy] =
         useState(noteService.getFilterFromSearchParams(searchParams))
+
+    const [modalMode, setModalMode] = useState(null)
+    const [selectedNoteId, setSelectedNoteId] = useState(null)
 
     const pinnedNotes = notes.filter(note => note.isPinned)
     const unpinnedNotes = notes.filter(note => !note.isPinned)
+
+    const noteToEdit = notes.find(note => note.id === selectedNoteId)
+
+    const colors = [
+        { name: 'Coral', color: '#faafa8' },
+        { name: 'Peach', color: '#f39f76' },
+        { name: 'Sand', color: '#fff8b8' },
+        { name: 'Mint', color: '#e2f6d3' },
+        { name: 'Sage', color: '#b4ddd3' },
+        { name: 'Fog', color: '#d4e4ed' },
+        { name: 'Storm', color: '#aeccdc' },
+        { name: 'Dusk', color: '#d3bfdb' },
+        { name: 'Blossom', color: '#f6e2dd' },
+        { name: 'Clay', color: '#e9e3d4' }
+    ]
 
     useEffect(() => {
         loadNotes()
@@ -28,13 +46,43 @@ export function NoteIndex() {
 
     }, [filterBy])
 
+    useEffect(() => {
+        const editId = searchParams.get('edit')
+        const colorId = searchParams.get('color')
+
+        if (editId) {
+            setSelectedNoteId(editId)
+            setModalMode('edit')
+        }
+
+        else if (colorId) {
+            setSelectedNoteId(colorId)
+            setModalMode('color')
+        }
+
+        else {
+            setSelectedNoteId(null)
+            setModalMode(null)
+        }
+
+    }, [searchParams])
+
+    function onOpenEditModal(noteId) {
+        setSearchParams({ edit: noteId })
+    }
+
+    function onOpenColorModal(noteId) {
+        setSearchParams({ color: noteId })
+    }
+
+    function onCloseModal() {
+        setSearchParams({})
+    }
+
     function loadNotes() {
         noteService.query(filterBy)
-            .then(notes => setNotes(notes))
-            .catch(err => {
-                console.log('Cannot load notes', err)
-                showErrorMsg('Cannot load notes')
-            })
+            .then(setNotes)
+            .catch(() => showErrorMsg('Cannot load notes'))
     }
 
     function onRemoveNote(noteId) {
@@ -102,7 +150,6 @@ export function NoteIndex() {
 
     return <section className="container">
         <AppHeader filterBy={filterBy} setFilterBy={setFilterBy} />
-        <React.Fragment>
             <NoteFilter
                 filterBy={filterBy}
                 setFilterBy={setFilterBy}
@@ -124,9 +171,9 @@ export function NoteIndex() {
                         onRemoveNote={onRemoveNote}
                         onPinNote={onPinNote}
                         onDuplicateNote={onDuplicateNote}
-                        onChangeColor={onChangeColor}
                         onToggleTodo={onToggleTodo}
-                        onSaveNote={onSaveNote} />
+                        onOpenEditModal={onOpenEditModal}
+                        onOpenColorModal={onOpenColorModal} />
                 </section>
             )}
 
@@ -134,12 +181,57 @@ export function NoteIndex() {
                 {pinnedNotes.length > 0 && <h3>Others:</h3>}
                 <NoteList notes={unpinnedNotes}
                     onRemoveNote={onRemoveNote}
-                    onPinNote={onPinNote}
-                    onDuplicateNote={onDuplicateNote}
-                    onChangeColor={onChangeColor}
-                    onToggleTodo={onToggleTodo}
-                    onSaveNote={onSaveNote} />
+                        onPinNote={onPinNote}
+                        onDuplicateNote={onDuplicateNote}
+                        onToggleTodo={onToggleTodo}
+                        onOpenEditModal={onOpenEditModal}
+                        onOpenColorModal={onOpenColorModal} />
             </section>
-        </React.Fragment>
+
+            <Modal
+                isShown={modalMode !== null}
+                onClose={onCloseModal}
+                className={modalMode === 'color' ? 'modal-color' : 'modal-edit'}
+            >
+
+                {/* COLOR PICKER */}
+                {modalMode === 'color' && (
+                    <React.Fragment>
+                        <h3>Pick a Color:</h3>
+
+                        <div role="listbox" className="color-listbox">
+                            {colors.map(color => (
+                                <div
+                                    key={color.name}
+                                    role="option"
+                                    title={color.name}
+                                    className="color-option"
+                                    style={{ backgroundColor: color.color }}
+                                    onClick={() => {
+                                        onChangeColor(selectedNoteId, color.color)
+                                        onCloseModal()
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    </React.Fragment>
+                )}
+
+                {/* EDIT NOTE */}
+                {modalMode === 'edit' && noteToEdit && (
+                    <React.Fragment>
+                        <h3>Edit Note</h3>
+
+                        <NoteEdit
+                            note={noteToEdit}
+                            onSaveNote={(updatedNote) => {
+                                onSaveNote(updatedNote)
+                                onCloseModal()
+                            }}
+                        />
+                    </React.Fragment>
+                )}
+
+            </Modal>
     </section>
 }
