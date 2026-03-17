@@ -60,6 +60,12 @@
   }
 }
 
+.mail-preview__name {
+  &.isDraft {
+    color: var(--red0);
+  }
+}
+
 .mail-preview__hyphen {
   padding: 0 0.3125em;
 }

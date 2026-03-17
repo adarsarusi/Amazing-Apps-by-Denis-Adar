@@ -3,16 +3,7 @@ const { useState, useRef, useEffect } = React
 const { useParams, useLocation } = ReactRouterDOM
 const { Link, NavLink } = ReactRouterDOM
 
-
-const appLogos = {
-  mrMail: '/assets/imges/logos/mr-mail.png',
-  msNote: '/assets/imges/logos/ms-note.png',
-  drBook: '/assets/imges/logos/dr-book.png',
-  meatTeam: '/assets/imges/logos/team-meat.png',
-}
-
 import { MailFilter } from "../apps/mail/cmps/MailFilter.jsx"
-
 
 export function AppHeader({ filterBy, setFilterBy }) {
 
@@ -22,7 +13,7 @@ export function AppHeader({ filterBy, setFilterBy }) {
   const location = useLocation()
   const pageName = location.pathname
 
-  console.log('pageName: ', pageName)
+  const { appLogo, storageDb } = _onAppChange(pageName)
 
   function openAppsDrawer(state) {
     inputRef.current = stateApps
@@ -37,23 +28,17 @@ export function AppHeader({ filterBy, setFilterBy }) {
   })
 
 
-  let logo = ''
-  if (pageName === '/mail') logo = appLogos.mrMail
-  else if (pageName === '/note') logo = appLogos.msNote
-  else if (pageName === '/') logo = appLogos.meatTeam
-
-
   return (
     <header className="app-header">
 
-      <img className="app-header__logo" src={logo} />
+      <img className="app-header__logo" src={appLogo} />
 
       {(pageName !== '/') && <MailFilter filterBy={filterBy} setFilterBy={setFilterBy} />}
 
       <nav className="app-header__nav">
         <NavLink to="/"><button className="app-header__nav-button icon-home u-icon-center"></button></NavLink>
         <button className="app-header__nav-button icon-refresh u-icon-center"
-          onClick={() => localStorage.removeItem("Mail_DB")}></button>
+          onClick={() => localStorage.removeItem({ storageDb })}></button>
         <button onClick={() => openAppsDrawer(inputRef.current)} className="app-header__nav-button icon-apps u-icon-center"></button>
         <button className="app-header__nav-button icon-account u-icon-center"></button>
       </nav>
@@ -61,15 +46,15 @@ export function AppHeader({ filterBy, setFilterBy }) {
       <div className={`app-header__apps-container ${stateApps}`}>
         <nav className="app-header__apps">
           <NavLink to="/mail"> <button className="app-header__app-button">
-            <img className="app-header__app-icon" src="/assets/imges/logos/logo-icons/logo-icon-mail.png" alt="" />
+            <img className="app-header__app-icon" src="/assets/images/logos/logo-icons/logo-icon-mail.png" alt="" />
             Ms. mail
           </button></NavLink>
           <NavLink to="/note"> <button className="app-header__app-button">
-            <img className="app-header__app-icon" src="/assets/imges/logos/logo-icons/logo-icon-note.png" alt="" />
+            <img className="app-header__app-icon" src="/assets/images/logos/logo-icons/logo-icon-note.png" alt="" />
             Ms. Note
           </button></NavLink>
-          <NavLink to="*"> <button className="app-header__app-button">
-            <img className="app-header__app-icon" src="/assets/imges/logos/logo-icons/logo-icon-book.png" alt="" />
+          <NavLink to="/"> <button className="app-header__app-button">
+            <img className="app-header__app-icon" src="/assets/images/logos/logo-icons/logo-icon-book.png" alt="" />
             Dr. Book
           </button></NavLink>
         </nav>
@@ -77,4 +62,25 @@ export function AppHeader({ filterBy, setFilterBy }) {
 
     </header>
   )
+}
+
+
+function _onAppChange(pageName) {
+
+  const appLogos = {
+    mrMail: '/assets/images/logos/mr-mail.png',
+    msNote: '/assets/images/logos/ms-note.png',
+    drBook: '/assets/images/logos/dr-book.png',
+    meatTeam: '/assets/images/logos/team-meat.png',
+  }
+
+  if (pageName.includes('/mail')) {
+    return { appLogo: appLogos.mrMail, storageDb: 'mailDB' }
+  }
+  else if (pageName.includes('/note')) {
+    return { appLogo: appLogos.msNote, storageDb: 'noteDB' }
+  }
+  else {
+    return { appLogo: appLogos.meatTeam, storageDb: '' }
+  }
 }

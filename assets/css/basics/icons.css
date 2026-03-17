@@ -38,7 +38,7 @@
 .icon-logout::before { content: 'logout'; }
 .icon-archive::before { content: 'archive'; }
 .icon-spam::before { content: 'report'; }
-.icon-drafts::before { content: 'draft'; }
+.icon-draft::before { content: 'draft'; }
 .icon-inbox::before { content: 'inbox'; }
 .icon-sent::before { content: 'send'; }
 .icon-starred::before { content: 'star'; }
@@ -47,6 +47,9 @@
 .icon-read::before { content: 'drafts'; }
 .icon-unread::before { content: 'mark_email_unread'; }
 .icon-edit::before { content: 'edit'; }
+.icon-close::before { content: 'close'; }
+.icon-minimize::before { content: 'minimize'; }
+.icon-maximize::before { content: 'open_in_full'; }
 
 /* Notes */
 .icon-palette::before { content: 'palette'; }
@@ -72,7 +75,7 @@
 .icon-fill-logout::before { content: 'logout'; }
 .icon-fill-archive::before { content: 'archive'; }
 .icon-fill-spam::before { content: 'report'; }
-.icon-fill-drafts::before { content: 'draft'; }
+.icon-fill-draft::before { content: 'draft'; }
 .icon-fill-inbox::before { content: 'inbox'; }
 .icon-fill-sent::before { content: 'send'; }
 .icon-fill-starred::before { content: 'star'; }

@@ -1,12 +1,14 @@
 
 const { useState, useEffect } = React
+const { useLocation } = ReactRouterDOM
 
 
 export function MailFilter({ filterBy, setFilterBy }) {
 
-  console.log('filterBy: ', filterBy)
-  
   const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+
+  const location = useLocation()
+  const pageName = location.pathname
 
   function handleChange(ev) {
     ev.preventDefault()
@@ -23,7 +25,10 @@ export function MailFilter({ filterBy, setFilterBy }) {
   }
 
   useEffect(() => {
-    setFilterByToEdit(filterByToEdit)
+    if (pageName.includes('/note'))
+      setFilterBy(filterByToEdit)
+    else
+      setFilterByToEdit(filterByToEdit)
   }, [filterByToEdit])
 
 

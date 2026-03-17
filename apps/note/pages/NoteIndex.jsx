@@ -3,7 +3,6 @@ const { Link, useSearchParams } = ReactRouterDOM
 
 import { NoteFilter } from '../cmps/NoteFilter.jsx'
 import { NoteList } from '../cmps/NoteList.jsx'
-import { NoteAdd } from '../cmps/NoteAdd.jsx'
 import { AppHeader } from '../../../cmps/AppHeader.jsx'
 import { NoteEdit } from '../cmps/NoteEdit.jsx'
 
