@@ -6,7 +6,8 @@
   --color-primary-200: #e9eef6;
   --color-primary-300: #d3e3fd;
   --color-primary-400: #c2e7ff;
-  
+  --color-primary-1000: #0b57d0;
+
 
   --color-neutral-200: #eaecee;
   --color-neutral-300: #dadce0;
@@ -15,6 +16,7 @@
   --color-neutral-700: #3c4043;
   --color-neutral-800: #454647;
   --color-neutral-900: #1f1f1f;
+
 
   --shadow-mail-default-top: inset 0 1px 0 0 rgba(100, 121, 143, 0.12);
   --shadow-mail-default-bottom: inset 0 -1px 0 0 rgba(100, 121, 143, 0.12);
@@ -40,4 +42,5 @@
 
   --white0: #ffffff;
   --black0: #303030;
+  --red0: #dd4b39;
 }

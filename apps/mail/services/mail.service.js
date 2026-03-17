@@ -10,16 +10,15 @@ export const mailService = {
   getEmptyMail,
 }
 
-const loggedinUser = {
-  email: 'user@appsus.com',
-  fullname: 'Mahatma Appsus',
+const loggedInUser = {
+  email: 'support@meatteam.com',
+  fullname: 'Meat Team',
 }
 
-const MAIL_KEY = 'Mail_DB'
+const MAIL_KEY = 'mailDB'
 utilService.loadFromStorage(MAIL_KEY) || _createMails(40)
 
 function query(filterBy = {}) {
-  console.log('filterBy: ', filterBy)
   return storageService.query(MAIL_KEY).then((mails) => {
     const {
       txt,
@@ -86,7 +85,12 @@ function query(filterBy = {}) {
     }
     if (attachments && attachments.isHeld) mails = mails.filter((mail) => mail.attachments && mail.attachments.isHeld)
 
-    console.log('mails: ', mails)
+    mails.sort((a, b) => {
+      const dateA = a.createdAt
+      const dateB = b.createdAt
+      return dateB - dateA 
+    })
+
     return mails
 
   })
@@ -105,7 +109,10 @@ function remove(mailId) {
 
 function save(mail) {
   if (mail.id) return storageService.put(MAIL_KEY, mail)
-  else return storageService.post(MAIL_KEY, mail)
+  else {
+    mail.createdAt = new Date()
+    return storageService.post(MAIL_KEY, mail)
+  }
 }
 
 function getDefaultFilters(
@@ -141,19 +148,20 @@ function getDefaultFilters(
 
 function getEmptyMail() {
   return {
-    from: '',
+    from: loggedInUser.email,
+    name: loggedInUser.fullname,
     to: '',
-    date: '',
+    createdAt: '',
     subject: '',
     body: '',
     categories: [],
     labels: [],
-    isRead: false,
+    isRead: true,
     isStared: false,
     isImportant: false,
     isSpam: false,
-    isSent: false,
-    isDraft: false,
+    isSent: true,
+    isDraft: true,
     isTrash: false,
     isArchived: false,
     attachments: {
@@ -183,7 +191,7 @@ function _createMails(amount) {
       id: utilService.makeId(),
       subject: utilService.makeLorem(4, false),
       name: user.fullName,
-      from: loggedinUser.email,
+      from: loggedInUser.email,
       to: user.email,
       createdAt: utilService.makeDate(),
       body: utilService.makeLorem(100),

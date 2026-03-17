@@ -9,14 +9,14 @@ const folderList = [
   { name: 'starred', filter: 'isStarred' },
   { name: 'important', filter: 'isImportant' },
   { name: 'sent', filter: 'isSent' },
-  { name: 'drafts', filter: 'isDrafts' },
+  { name: 'draft', filter: 'isDraft' },
   { name: 'archive', filter: 'isArchive' },
   { name: 'trash', filter: 'isTrash' },
   { name: 'spam', filter: 'isSpam' },
 ]
 
 
-export function MailFolderList({ filterBy, setFilterBy, mails }) {
+export function MailFolderList({ filterBy, setFilterBy, mails, setOnCompose }) {
 
   const [inboxUnread, setInboxUnread] = useState(0)
 
@@ -29,7 +29,6 @@ export function MailFolderList({ filterBy, setFilterBy, mails }) {
   }, [mails])
 
 
-
   function fetchUnreadCount() {
     mailService.query({ folder: 'isInbox' })
       .then(inboxMails => {
@@ -39,21 +38,25 @@ export function MailFolderList({ filterBy, setFilterBy, mails }) {
   }
 
   return (
-    <section className='mail-folder-list'>
-      <ul>
-        {folderList.map(folder => (
-          <li key={folder.name}>
-            <MailFolder
-              name={folder.name}
-              filter={folder.filter}
-              handleFolderChange={handleFolderChange}
-              filterBy={filterBy}
-              inboxUnread={inboxUnread}
-            />
-          </li>
-        ))}
-      </ul>
-    </section>
+    <React.Fragment>
+      <button className='mail-compose__button icon-edit u-icon-center'
+        onClick={() => setOnCompose(true)}>Compose</button>
+      <section className='mail-folder-list'>
+        <ul>
+          {folderList.map(folder => (
+            <li key={folder.name}>
+              <MailFolder
+                name={folder.name}
+                filter={folder.filter}
+                handleFolderChange={handleFolderChange}
+                filterBy={filterBy}
+                inboxUnread={inboxUnread}
+              />
+            </li>
+          ))}
+        </ul>
+      </section>
+    </React.Fragment>
   )
 }
 

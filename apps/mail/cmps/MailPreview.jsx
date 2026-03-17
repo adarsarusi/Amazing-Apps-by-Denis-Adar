@@ -4,7 +4,7 @@ import { utilService } from '../../../services/util.service.js'
 export function MailPreview({ mail, onAction }) {
   return (
     <div className={`mail-preview ${mail.isRead ? 'isRead' : ''}`}>
-      <p className="mail-preview__name">{mail.name}</p>
+      <p className={`mail-preview__name ${mail.name === 'Draft' ? 'isDraft' : ''}`}>{mail.name}</p>
       <p className="mail-preview__text">
         <span className="mail-preview__subject">{mail.subject}</span>
         <span className="mail-preview__hyphen">-</span>
@@ -34,8 +34,37 @@ export function MailPreview({ mail, onAction }) {
 }
 
 function _formatPreviewDate(date) {
-  const newDate = new Date(date)
-  const day = newDate.getDay()
-  const month = utilService.getMonthName(newDate)
-  return day + ' ' + month + '.'
+  const now = new Date()
+  const nowDay = now.getDate()
+  const nowMonth = now.getMonth()
+  const nowYear = now.getFullYear()
+
+  const ev = new Date(date)
+  const evDay = ev.getDate()
+  const evMonth = ev.getMonth()
+  const evYear = ev.getFullYear()
+
+  const evMonthName = utilService.getMonthName(ev)
+
+  if (evYear === nowYear &&
+    nowMonth === evMonth &&
+    nowDay === evDay) {
+
+    const evTime = ev.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    })
+    return evTime
+  }
+
+  if (evYear < nowYear) {
+    const d = utilService.padNum(evDay)
+    const m = utilService.padNum(evMonth)
+    const y = utilService.padNum(evYear)
+
+    return d + '/' + m + '/' + y
+  }
+
+  return evDay + ' ' + evMonthName + '.'
 }

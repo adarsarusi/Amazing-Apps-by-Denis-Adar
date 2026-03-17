@@ -1,12 +1,19 @@
 body {
   margin: 0;
-  font-family: 'Google Sans', Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
-  font-size: 100%;
-
+  font-size: 14px;
+  font-weight: normal;
   height: 100vh;
   overflow: hidden;
 
   margin-block-start: 120px;
+}
+
+body,
+input,
+textarea,
+select {
+  font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+
 }
 
 h1,
