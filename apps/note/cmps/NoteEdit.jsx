@@ -44,30 +44,49 @@ export function NoteEdit({ note = null, onSaveNote }) {
         }))
     }
 
+    function handleFile(ev) {
+        const file = ev.target.files[0]
+        if (!file) return
+
+        const reader = new FileReader()
+
+        reader.onload = () => {
+            setNoteToEdit(prev => ({
+                ...prev,
+                info: {
+                    ...prev.info,
+                    url: reader.result
+                }
+            }))
+        }
+
+        reader.readAsDataURL(file)
+    }
+
     function changeType(type) {
         setNoteToEdit(prev => ({
             ...prev,
             type,
-            info: getInfoByType(type)
+            info: getInfoByType(prev.info.title, type)
         }))
     }
 
-    function getInfoByType(type) {
+    function getInfoByType(prevTitle, type) {
         switch (type) {
             case 'NoteTxt':
-                return { title: '', txt: '' }
+                return { title: prevTitle, txt: '' }
 
             case 'NoteImg':
-                return { title: '', url: '' }
+                return { title: prevTitle, url: '' }
 
             case 'NoteVideo':
-                return { title: '', url: '' }
+                return { title: prevTitle, url: '' }
 
             case 'NoteTodos':
-                return { title: '', todos: '' }
+                return { title: prevTitle, todos: '' }
 
             default:
-                return { title: '', txt: '' }
+                return { title: prevTitle, txt: '' }
         }
     }
 
@@ -111,6 +130,7 @@ export function NoteEdit({ note = null, onSaveNote }) {
                 <EditorCmp
                     note={noteToEdit}
                     handleChange={handleChange}
+                    handleFile={handleFile}
                     onOpenNoteForm={onOpenNoteForm}
                 />
             </div>
@@ -165,16 +185,28 @@ function NoteEditTxt({ note, handleChange, onOpenNoteForm }) {
     )
 }
 
-function NoteEditImg({ note, handleChange, onOpenNoteForm }) {
+function NoteEditImg({ note, handleChange, handleFile, onOpenNoteForm }) {
     return (
-        <input
-            type="text"
-            name="url"
-            placeholder="Enter image URL..."
-            value={note.info.url}
-            onClick={onOpenNoteForm}
-            onChange={handleChange}
-        />
+        <React.Fragment>
+            <input
+                type="text"
+                name="url"
+                placeholder="Enter image URL..."
+                value={note.info.url}
+                onClick={onOpenNoteForm}
+                onChange={handleChange}
+            />
+            <label htmlFor="fileInput" className="custom-file-upload">
+                Choose Picture
+            </label>
+            <input
+                type="file"
+                id="fileInput"
+                accept="image/*"
+                onChange={handleFile}
+            ></input>
+            {note.info.url && <img src={note.info.url} className="preview-img" />}
+        </React.Fragment>
     )
 }
 

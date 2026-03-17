@@ -3,6 +3,8 @@
     top: 0;
     width: 100%;
 
+    z-index: 1000;
+
     display: grid;
     grid-auto-flow: column;
     justify-content: space-between;
@@ -53,7 +55,6 @@
 }
 
 .app-header__apps-container {
-    z-index: 100;
     position: absolute;
     right: 15px;
     top: 4rem;

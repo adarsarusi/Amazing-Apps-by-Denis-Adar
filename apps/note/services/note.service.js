@@ -4,7 +4,54 @@ import { utilService } from '../../../services/util.service.js'
 import { storageService } from '../../../services/async-storage.service.js'
 
 const NOTE_KEY = 'noteDB'
-// _createNotes()
+const notes = utilService.loadFromStorage(NOTE_KEY)
+if (!notes || !notes.length) _createNotes()
+
+function _createNotes() {
+    const types = ['NoteTxt', 'NoteImg', 'NoteVideo', 'NoteTodos']
+    const colors = ['#faafa8', '#f39f76', '#fff8b8', '#e2f6d3', '#e9e3d4',
+        '#b4ddd3', '#d4e4ed', '#aeccdc', '#d3bfdb', '#f6e2dd']
+    const notes = []
+    for (let i = 0; i < 8; i++) {
+        const note = {
+            id: utilService.makeId(),
+            createdAt: Date.now(),
+            type: types[utilService.getRandomIntInclusive(0, 3)],
+            isPinned: Math.random() > 0.7,
+            style: {
+                backgroundColor: colors[utilService.getRandomIntInclusive(0, 9)]
+            },
+            info: {
+                title: _makeLorem(3),
+            }
+        }
+
+        switch (note.type) {
+            case 'NoteTxt':
+                note.info.txt = _makeLorem(10)
+                break
+
+            case 'NoteImg':
+                note.info.url = `https://picsum.photos/500`
+                break
+
+            case 'NoteVideo':
+                note.info.url = 'https://www.youtube.com/watch?v=OOmRInABehI'
+                break
+
+            case 'NoteTodos':
+                note.info.todos = [
+                    { txt: "Task1", isDone: false },
+                    { txt: "Task2", isDone: true },
+                    { txt: "Task3", isDone: false }
+                ]
+                break
+        }
+        notes.push(note)
+    }
+
+    utilService.saveToStorage(NOTE_KEY, notes)
+}
 
 export const noteService = {
     query,
@@ -73,3 +120,13 @@ function getDefaultFilter() {
     }
 }
 
+function _makeLorem(size = 100) {
+    const words = ['The sky', 'above', 'the port', 'was', 'the color', 'of nature', 'tuned', 'to', 'a live channel', 'All', 'this happened', 'more or less', 'I', 'had', 'the story', 'bit by bit', 'from various people', 'and', 'as generally', 'happens', 'in such cases', 'each time', 'it', 'was', 'a different story', 'a pleasure', 'to', 'burn']
+    var txt = ''
+    while (size > 0) {
+        size--
+        txt += words[Math.floor(Math.random() * words.length)]
+        if (size >= 1) txt += ' '
+    }
+    return txt
+}

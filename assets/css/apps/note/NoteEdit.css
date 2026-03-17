@@ -32,6 +32,19 @@
             outline: none;
             background: transparent;
         }
+
+        .custom-file-upload {
+            padding: 10px 20px;
+            background-color: #aeccdc;
+            /* color: white; */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #fileInput {
+            display: none;
+            /* Hide default input */
+        }
     }
 
     >.note-controls {
