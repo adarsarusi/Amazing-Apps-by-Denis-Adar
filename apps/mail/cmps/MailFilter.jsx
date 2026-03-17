@@ -4,11 +4,6 @@ const { useLocation } = ReactRouterDOM
 
 
 export function MailFilter({ filterBy, setFilterBy }) {
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> f/Note/queryParams
   const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
 
   const location = useLocation()

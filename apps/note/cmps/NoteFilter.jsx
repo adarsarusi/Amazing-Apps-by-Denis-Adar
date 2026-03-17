@@ -29,13 +29,6 @@ export function NoteFilter({ filterBy, setFilterBy, onClearFilter }) {
 
     return <div className="note-filter">
 
-        <input
-            value={filterByToEdit.txt}
-            onChange={ev => handleChange(ev)}
-            type="text"
-            name="txt"
-            placeholder="Search..." />
-
         <section className="btn-group">
             {types.map(type => (
 
