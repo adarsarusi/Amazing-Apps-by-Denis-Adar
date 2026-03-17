@@ -5,6 +5,8 @@ body {
 
   height: 100vh;
   overflow: hidden;
+
+  margin-block-start: 120px;
 }
 
 h1,

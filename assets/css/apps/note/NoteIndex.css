@@ -3,6 +3,9 @@
  .container{
     text-align: center;
 
+    overflow: scroll;
+    height: 100vh;
+
     margin-block-start: 2vh;
 
     >.empty-notes{
