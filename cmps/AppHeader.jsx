@@ -46,15 +46,15 @@ export function AppHeader({ filterBy, setFilterBy }) {
       <div className={`app-header__apps-container ${stateApps}`}>
         <nav className="app-header__apps">
           <NavLink to="/mail"> <button className="app-header__app-button">
-            <img className="app-header__app-icon" src="/assets/images/logos/logo-icons/logo-icon-mail.png" alt="" />
+            <img className="app-header__app-icon" src="assets/images/logos/logo-icons/logo-icon-mail.png" alt="" />
             Ms. mail
           </button></NavLink>
           <NavLink to="/note"> <button className="app-header__app-button">
-            <img className="app-header__app-icon" src="/assets/images/logos/logo-icons/logo-icon-note.png" alt="" />
+            <img className="app-header__app-icon" src="assets/images/logos/logo-icons/logo-icon-note.png" alt="" />
             Ms. Note
           </button></NavLink>
           <NavLink to="/"> <button className="app-header__app-button">
-            <img className="app-header__app-icon" src="/assets/images/logos/logo-icons/logo-icon-book.png" alt="" />
+            <img className="app-header__app-icon" src="assets/images/logos/logo-icons/logo-icon-book.png" alt="" />
             Dr. Book
           </button></NavLink>
         </nav>
@@ -68,10 +68,10 @@ export function AppHeader({ filterBy, setFilterBy }) {
 function _onAppChange(pageName) {
 
   const appLogos = {
-    mrMail: '/assets/images/logos/mr-mail.png',
-    msNote: '/assets/images/logos/ms-note.png',
-    drBook: '/assets/images/logos/dr-book.png',
-    meatTeam: '/assets/images/logos/team-meat.png',
+    mrMail: 'assets/images/logos/mr-mail.png',
+    msNote: 'assets/images/logos/ms-note.png',
+    drBook: 'assets/images/logos/dr-book.png',
+    meatTeam: 'assets/images/logos/team-meat.png',
   }
 
   if (pageName.includes('/mail')) {
