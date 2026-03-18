@@ -1,9 +1,16 @@
 import { utilService } from '../../../services/util.service.js'
 
 
-export function MailPreview({ mail, onAction }) {
+export function MailPreview({ mail, onAction, setOnDetails, setSelectedMailId, setSearchParams }) {
+
+  function goToDetails(mailId) {
+    setSearchParams({ mailId: mailId })
+    setSelectedMailId(mailId)
+    setOnDetails(true)
+  }
+
   return (
-    <div className={`mail-preview ${mail.isRead ? 'isRead' : ''}`}>
+    <div onClick={() => goToDetails(mail.id)} className={`mail-preview ${mail.isRead ? 'isRead' : ''}`}>
       <p className={`mail-preview__name ${mail.name === 'Draft' ? 'isDraft' : ''}`}>{mail.name}</p>
       <p className="mail-preview__text">
         <span className="mail-preview__subject">{mail.subject}</span>

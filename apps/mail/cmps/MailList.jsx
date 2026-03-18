@@ -7,10 +7,16 @@ export function MailList({ mails, onAction, setOnDetails, setSelectedMailId, set
   const navigate = useNavigate()
 
   function goToDetails(mailId) {
-    setSearchParams({ mailId: mailId })
+    setSearchParams({ mailId })
     setSelectedMailId(mailId)
     setOnDetails(true)
   }
+
+  function handlePreviewClick(ev, mail) {
+    if (ev.target.closest('.mail-actions__button')) return
+    goToDetails(mail.id)
+  }
+
 
   return (
     <section className='mail-container'>
@@ -20,8 +26,12 @@ export function MailList({ mails, onAction, setOnDetails, setSelectedMailId, set
           No messages matched your search. Try using search options such as sender, date, size and more.
         </div>}
         {mails.map((mail) => (
-          <li onClick={() => goToDetails(mail.id)} className="mail-list__item" key={mail.id}>
-            <MailPreview mail={mail} onAction={onAction} />
+          <li onClick={() => handlePreviewClick(ev, mail)} className="mail-list__item" key={mail.id}>
+            <MailPreview mail={mail}
+              onAction={onAction}
+              setOnDetails={setOnDetails}
+              setSelectedMailId={setSelectedMailId}
+              setSearchParams={setSearchParams} />
           </li>
         ))}
       </ul>

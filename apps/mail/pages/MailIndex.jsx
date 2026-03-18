@@ -27,7 +27,7 @@ export function MailIndex() {
   }, [filterBy, onCompose])
 
   useEffect(() => {
-    setSearchParams({ folder: 'inbox' })
+    setSearchParams({ folder: 'isInbox' })
   }, [])
 
 

@@ -28,6 +28,11 @@
          align-self: start;
      }
 
+     .mail-details {
+         grid-area: main;
+         align-self: start;
+     }
+
      .mail-container__list {
          overflow-y: auto;
          overflow-x: hidden;
