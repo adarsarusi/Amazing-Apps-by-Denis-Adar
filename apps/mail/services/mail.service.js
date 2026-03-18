@@ -8,6 +8,7 @@ export const mailService = {
   save,
   getDefaultFilters,
   getEmptyMail,
+  getFilterFromSearchParams,
 }
 
 const loggedInUser = {
@@ -146,6 +147,16 @@ function getDefaultFilters(
   }
 }
 
+function getFilterFromSearchParams(searchParams) {
+  const defaultFilter = getDefaultFilters()
+  const filterBy = {}
+
+  for (const field in defaultFilter) {
+    filterBy[field] = searchParams.get(field) || ''
+  }
+  return filterBy
+}
+
 function getEmptyMail() {
   return {
     from: loggedInUser.email,
@@ -191,8 +202,8 @@ function _createMails(amount) {
       id: utilService.makeId(),
       subject: utilService.makeLorem(4, false),
       name: user.fullName,
-      from: loggedInUser.email,
-      to: user.email,
+      from: user.email,
+      to: loggedInUser.email,
       createdAt: utilService.makeDate(),
       body: utilService.makeLorem(100),
       pageCount: utilService.getRandomIntInclusive(20, 600),

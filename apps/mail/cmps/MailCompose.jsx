@@ -9,7 +9,7 @@ export function MailCompose({ setOnCompose }) {
 
   const [newMail, setNewMail] = useState(mailService.getEmptyMail)
   const params = useParams()
-
+  
   useEffect(() => {
     if (params.id)
       mailService.get(params.id)
