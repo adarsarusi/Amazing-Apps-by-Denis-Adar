@@ -1,5 +1,5 @@
 const { useState, useEffect } = React
-const { Link } = ReactRouterDOM
+const { Link, useLocation } = ReactRouterDOM
 
 import { mailService } from '../services/mail.service.js'
 import { MailList } from '../cmps/MailList.jsx'
@@ -12,6 +12,9 @@ export function MailIndex() {
   const [mails, setMails] = useState(null)
   const [onCompose, setOnCompose] = useState(false)
   const [filterBy, setFilterBy] = useState(mailService.getDefaultFilters())
+
+  const location = useLocation()
+  const { state } = location || {}
 
   useEffect(() => {
     loadMails()
@@ -66,7 +69,8 @@ export function MailIndex() {
   return (
     <section className='mail-index'>
 
-      {onCompose && < MailCompose setOnCompose={setOnCompose} />}
+      {onCompose && !state && < MailCompose setOnCompose={setOnCompose} />}
+      {onCompose && state && <MailCompose state={state} setOnCompose={setOnCompose} />}
 
       <AppHeader
         filterBy={filterBy}

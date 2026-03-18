@@ -1,5 +1,5 @@
 const { useState, useEffect } = React
-const { useSearchParams } = ReactRouterDOM
+const { useSearchParams, useNavigate } = ReactRouterDOM
 
 import { NoteFilter } from '../cmps/NoteFilter.jsx'
 import { NoteList } from '../cmps/NoteList.jsx'
@@ -26,6 +26,45 @@ export function NoteIndex() {
     const unpinnedNotes = notes.filter(note => !note.isPinned)
 
     const noteToEdit = notes.find(note => note.id === selectedNoteId)
+
+    const navigate = useNavigate()
+
+    const dataToPass = {
+        id: 123,
+        title: 'Example Item',
+        details: 'This is some data from the first page.'
+    }
+
+    const handleNavigation = () => {
+        navigate('/mail/', { state: dataToPass })
+    }
+
+    function onSendAsEmail(noteId) {
+        noteService.get(noteId)
+            .then(note => {
+                dataToPass.name = note.info.title
+
+                switch (note.type) {
+                    case 'NoteTxt':
+                         dataToPass.details = note.info.txt
+                         break
+
+                    case 'NoteImg':
+                         dataToPass.details = note.info.url
+                         break
+
+                    case 'NoteVideo':
+                         dataToPass.details = note.info.url
+                         break
+
+                    case 'NoteTodos':
+                         dataToPass.details = note.info.todos
+                         break
+                }
+                console.log(dataToPass)
+                handleNavigation()
+            })
+    }
 
     const colors = [
         { name: 'Coral', color: '#faafa8' },
@@ -150,88 +189,90 @@ export function NoteIndex() {
 
     return <section className="container">
         <AppHeader filterBy={filterBy} setFilterBy={setFilterBy} />
-            <NoteFilter
-                filterBy={filterBy}
-                setFilterBy={setFilterBy}
-                onClearFilter={onClearFilter} />
+        <NoteFilter
+            filterBy={filterBy}
+            setFilterBy={setFilterBy}
+            onClearFilter={onClearFilter} />
 
-            <NoteEdit onSaveNote={onSaveNote} />
+        <NoteEdit onSaveNote={onSaveNote} />
 
-            {!notes.length &&
-                <section className="empty-notes">
-                    <img src="apps\note\imgs\note-icon.png" alt="" />
-                    <p>Your notes will appear here!</p>
-                </section>}
+        {!notes.length &&
+            <section className="empty-notes">
+                <img src="apps\note\imgs\note-icon.png" alt="" />
+                <p>Your notes will appear here!</p>
+            </section>}
 
 
-            {pinnedNotes.length > 0 && (
-                <section className="pinned-notes">
-                    <h3>Pinned:</h3>
-                    <NoteList notes={pinnedNotes}
-                        onRemoveNote={onRemoveNote}
-                        onPinNote={onPinNote}
-                        onDuplicateNote={onDuplicateNote}
-                        onToggleTodo={onToggleTodo}
-                        onOpenEditModal={onOpenEditModal}
-                        onOpenColorModal={onOpenColorModal} />
-                </section>
+        {pinnedNotes.length > 0 && (
+            <section className="pinned-notes">
+                <h3>Pinned:</h3>
+                <NoteList notes={pinnedNotes}
+                    onRemoveNote={onRemoveNote}
+                    onPinNote={onPinNote}
+                    onDuplicateNote={onDuplicateNote}
+                    onToggleTodo={onToggleTodo}
+                    onSendAsEmail={onSendAsEmail}
+                    onOpenEditModal={onOpenEditModal}
+                    onOpenColorModal={onOpenColorModal} />
+            </section>
+        )}
+
+        <section className="other-notes">
+            {pinnedNotes.length > 0 && <h3>Others:</h3>}
+            <NoteList notes={unpinnedNotes}
+                onRemoveNote={onRemoveNote}
+                onPinNote={onPinNote}
+                onDuplicateNote={onDuplicateNote}
+                onToggleTodo={onToggleTodo}
+                onSendAsEmail={onSendAsEmail}
+                onOpenEditModal={onOpenEditModal}
+                onOpenColorModal={onOpenColorModal} />
+        </section>
+
+        <Modal
+            isShown={modalMode !== null}
+            onClose={onCloseModal}
+            className={modalMode === 'color' ? 'modal-color' : 'modal-edit'}
+        >
+
+            {/* COLOR PICKER */}
+            {modalMode === 'color' && (
+                <React.Fragment>
+                    <h3>Pick a Color:</h3>
+
+                    <div role="listbox" className="color-listbox">
+                        {colors.map(color => (
+                            <div
+                                key={color.name}
+                                role="option"
+                                title={color.name}
+                                className="color-option"
+                                style={{ backgroundColor: color.color }}
+                                onClick={() => {
+                                    onChangeColor(selectedNoteId, color.color)
+                                    onCloseModal()
+                                }}
+                            />
+                        ))}
+                    </div>
+                </React.Fragment>
             )}
 
-            <section className="other-notes">
-                {pinnedNotes.length > 0 && <h3>Others:</h3>}
-                <NoteList notes={unpinnedNotes}
-                    onRemoveNote={onRemoveNote}
-                        onPinNote={onPinNote}
-                        onDuplicateNote={onDuplicateNote}
-                        onToggleTodo={onToggleTodo}
-                        onOpenEditModal={onOpenEditModal}
-                        onOpenColorModal={onOpenColorModal} />
-            </section>
+            {/* EDIT NOTE */}
+            {modalMode === 'edit' && noteToEdit && (
+                <React.Fragment>
+                    <h3>Edit Note</h3>
 
-            <Modal
-                isShown={modalMode !== null}
-                onClose={onCloseModal}
-                className={modalMode === 'color' ? 'modal-color' : 'modal-edit'}
-            >
+                    <NoteEdit
+                        note={noteToEdit}
+                        onSaveNote={(updatedNote) => {
+                            onSaveNote(updatedNote)
+                            onCloseModal()
+                        }}
+                    />
+                </React.Fragment>
+            )}
 
-                {/* COLOR PICKER */}
-                {modalMode === 'color' && (
-                    <React.Fragment>
-                        <h3>Pick a Color:</h3>
-
-                        <div role="listbox" className="color-listbox">
-                            {colors.map(color => (
-                                <div
-                                    key={color.name}
-                                    role="option"
-                                    title={color.name}
-                                    className="color-option"
-                                    style={{ backgroundColor: color.color }}
-                                    onClick={() => {
-                                        onChangeColor(selectedNoteId, color.color)
-                                        onCloseModal()
-                                    }}
-                                />
-                            ))}
-                        </div>
-                    </React.Fragment>
-                )}
-
-                {/* EDIT NOTE */}
-                {modalMode === 'edit' && noteToEdit && (
-                    <React.Fragment>
-                        <h3>Edit Note</h3>
-
-                        <NoteEdit
-                            note={noteToEdit}
-                            onSaveNote={(updatedNote) => {
-                                onSaveNote(updatedNote)
-                                onCloseModal()
-                            }}
-                        />
-                    </React.Fragment>
-                )}
-
-            </Modal>
+        </Modal>
     </section>
 }

@@ -8,6 +8,7 @@ export function NoteList({
     onPinNote,
     onDuplicateNote,
     onToggleTodo,
+    onSendAsEmail,
     onOpenEditModal,
     onOpenColorModal
 }) {
@@ -47,6 +48,11 @@ export function NoteList({
                             <div
                                 onClick={() => onDuplicateNote(note.id)}
                                 className="icon-content_copy">
+                            </div>
+
+                            <div
+                                onClick={() => onSendAsEmail(note.id)}
+                                className="icon-stacked_email">
                             </div>
 
                             <div

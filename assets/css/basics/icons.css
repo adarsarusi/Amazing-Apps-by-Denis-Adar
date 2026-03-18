@@ -62,6 +62,7 @@
 .icon-video::before { content: 'video'; }
 .icon-list::before { content: 'list'; }
 .icon-delete::before   { content: 'delete'; }
+.icon-stacked_email::before   { content: 'stacked_email'; }
 
 /* FILLED ICONS */
 
