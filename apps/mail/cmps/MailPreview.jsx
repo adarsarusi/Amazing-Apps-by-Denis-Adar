@@ -1,7 +1,7 @@
 import { utilService } from '../../../services/util.service.js'
 
 
-export function MailPreview({ mail, onAction, setOnDetails, setSelectedMailId, setSearchParams }) {
+export function MailPreview({ mail, onAction}) {
 
 
   return (

@@ -1,5 +1,5 @@
 const { useState, useEffect } = React
-const { useSearchParams, useNavigate } = ReactRouterDOM
+const { useSearchParams, useNavigate, useLocation } = ReactRouterDOM
 
 import { NoteFilter } from '../cmps/NoteFilter.jsx'
 import { NoteList } from '../cmps/NoteList.jsx'
@@ -16,6 +16,7 @@ export function NoteIndex() {
 
     const [searchParams, setSearchParams] = useSearchParams()
     const [notes, setNotes] = useState([])
+    const [getMail, setGetMail] = useState(null)
     const [filterBy, setFilterBy] =
         useState(noteService.getFilterFromSearchParams(searchParams))
 
@@ -29,8 +30,17 @@ export function NoteIndex() {
 
     const navigate = useNavigate()
 
+    const location = useLocation()
+    const { state } = location
+
+    useEffect(() => {
+    if (state) {
+      setGetMail(state)
+    }
+  }, [])
+
     const dataToPass = {
-        name:'Meat TeaM (NOTE)',
+        name: 'Meat TeaM (NOTE)',
         subject: 'Example Item',
         body: 'This is some data from the first page.',
         isDraft: true,
@@ -39,10 +49,6 @@ export function NoteIndex() {
             isHeld: false,
             files: [],
         },
-    }
-
-    const handleNavigation = () => {
-        navigate('/mail?onCompose=true', { state: dataToPass })
     }
 
     function onSendAsEmail(noteId) {
@@ -67,8 +73,7 @@ export function NoteIndex() {
                         dataToPass.body = note.info.todos
                         break
                 }
-                console.log(dataToPass)
-                handleNavigation()
+                navigate('/mail?onCompose=true', { state: dataToPass })
             })
     }
 
@@ -200,7 +205,10 @@ export function NoteIndex() {
             setFilterBy={setFilterBy}
             onClearFilter={onClearFilter} />
 
-        <NoteEdit onSaveNote={onSaveNote} />
+        <NoteEdit onSaveNote={onSaveNote}
+                  getMail={getMail}
+                  searchParams={searchParams}
+                  setSearchParams={setSearchParams} />
 
         {!notes.length &&
             <section className="empty-notes">

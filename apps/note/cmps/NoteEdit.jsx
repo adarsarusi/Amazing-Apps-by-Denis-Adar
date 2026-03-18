@@ -1,13 +1,15 @@
 const { useState, useEffect, useRef } = React
+
 import { noteService } from '../services/note.service.js'
 
-export function NoteEdit({ note = null, onSaveNote }) {
+export function NoteEdit({ note = null, onSaveNote, getMail, searchParams, setSearchParams }) {
 
     const [noteToEdit, setNoteToEdit] = useState(
         note ? { ...note } : noteService.getEmptyNote()
     )
 
     const [isNoting, setIsNoting] = useState(!!note)
+
     const noteFormRef = useRef(null)
 
     const EditorCmp = getEditorCmp(noteToEdit.type)
@@ -21,6 +23,12 @@ export function NoteEdit({ note = null, onSaveNote }) {
     }, [note])
 
     useEffect(() => {
+        if (getMail)
+            setNoteToEdit(getMail)
+
+    }, [getMail])
+
+    useEffect(() => {
         function handleClickOutside(ev) {
             if (!isNoting) return
             if (noteFormRef.current && !noteFormRef.current.contains(ev.target)) {
@@ -31,6 +39,10 @@ export function NoteEdit({ note = null, onSaveNote }) {
         window.addEventListener('click', handleClickOutside)
         return () => window.removeEventListener('click', handleClickOutside)
     }, [isNoting])
+
+    useEffect(() => {
+        setIsNoting(searchParams.get('isNoting') === 'true')
+    }, [])
 
     function handleChange(ev) {
         const { name, value } = ev.target

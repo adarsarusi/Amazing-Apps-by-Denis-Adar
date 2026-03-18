@@ -5,21 +5,17 @@ export function MailList({
   mails,
   onAction,
   setOnDetails,
-  setSelectedMailId,
-  setOnCompose,
   setSearchParams,
   folderName,
   onDraftEdit }) {
 
   function goToDetails(mailId) {
     if (folderName === 'isDraft') {
-      console.log('ggs2')
       onDraftEdit(mailId)
       return
     }
 
     setSearchParams({ mailId })
-    setSelectedMailId(mailId)
     setOnDetails(true)
   }
 
@@ -38,10 +34,7 @@ export function MailList({
         {mails.map((mail) => (
           <li onClick={(ev) => handlePreviewClick(ev, mail)} className="mail-list__item" key={mail.id}>
             <MailPreview mail={mail}
-              onAction={onAction}
-              setOnDetails={setOnDetails}
-              setSelectedMailId={setSelectedMailId}
-              setSearchParams={setSearchParams} />
+              onAction={onAction} />
           </li>
         ))}
       </ul>

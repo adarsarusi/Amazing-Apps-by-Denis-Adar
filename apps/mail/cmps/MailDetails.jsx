@@ -23,6 +23,29 @@ export function MailDetails({ onAction, folderName, setOnDetails, selectedMailId
     setOnDetails(false)
   }
 
+  const dataToPass = {
+    createdAt: Date.now(),
+    type: 'NoteTxt',
+    isPinned: false,
+    style: {
+      backgroundColor: '#fff8b8'
+    },
+    info: {
+      title: '',
+      txt: ''
+    }
+  }
+
+  function onCreateAsNote(mailId) {
+    mailService.get(mailId)
+      .then(mail => {
+        dataToPass.info.title = mail.subject
+        dataToPass.info.txt = mail.body
+
+        navigate('/note?isNoting=true', { state: dataToPass })
+      })
+  }
+
   useEffect(() => {
     if (mailId)
       mailService.get(mailId)
@@ -46,7 +69,7 @@ export function MailDetails({ onAction, folderName, setOnDetails, selectedMailId
           <button className='mail-details__button icon-spam mail-action-btn' onClick={() => onActionBackFromDetails(mail.id, 'spam')}></button>
           <button className='mail-details__button icon-trash mail-action-btn' onClick={() => onActionBackFromDetails(mail.id, 'remove')}></button>
           <button className={`mail-details__button mail-action-btn ${mail.isRead ? 'icon-unread' : 'icon-read'}`} onClick={() => onActionBackFromDetails(mail.id, 'read')}></button>
-          <button className={'mail-details__button mail-action-btn icon-note'}></button>
+          <button onClick={() => onCreateAsNote(mail.id)} className={'mail-details__button mail-action-btn icon-note'}></button>
         </div>
         <div className='mail-details__actions-right'>
           <Link to={`/mail?mailId=${mail.prevMailId}`}>
