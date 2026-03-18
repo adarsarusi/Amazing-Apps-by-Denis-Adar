@@ -88,7 +88,7 @@ function query(filterBy = {}) {
     mails.sort((a, b) => {
       const dateA = a.createdAt
       const dateB = b.createdAt
-      return dateB - dateA 
+      return dateB - dateA
     })
 
     return mails

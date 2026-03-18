@@ -3,11 +3,8 @@ const { useState, useEffect } = React
 const { useLocation } = ReactRouterDOM
 
 
-export function MailFilter({ filterBy, setFilterBy }) {
+export function MailFilter({ filterBy, setFilterBy, pageName }) {
   const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
-
-  const location = useLocation()
-  const pageName = location.pathname
 
   function handleChange(ev) {
     ev.preventDefault()
@@ -30,6 +27,7 @@ export function MailFilter({ filterBy, setFilterBy }) {
       setFilterByToEdit(filterByToEdit)
   }, [filterByToEdit])
 
+  if (pageName === '/') return
 
   return <form className='mail-filter'>
     <div className="mail-filter__search-bar">
@@ -42,7 +40,7 @@ export function MailFilter({ filterBy, setFilterBy }) {
         className="mail-filter__input"
         value={filterByToEdit.txt}
         onChange={ev => handleChange(ev)}
-        placeholder='Search mail'
+        placeholder={`Search ${pageName.replace('/', '')}`}
         name='txt'
         type='text'
       />

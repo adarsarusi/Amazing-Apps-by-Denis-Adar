@@ -27,16 +27,14 @@ export function AppHeader({ filterBy, setFilterBy }) {
     }
   })
 
-
   return (
     <header className={`app-header ${pageName.includes('/note') ? 'shadow' : ''}`}>
 
       <img className="app-header__logo" src={appLogo} />
 
-      {(pageName !== '/') && <MailFilter filterBy={filterBy} setFilterBy={setFilterBy} />}
+      <MailFilter filterBy={filterBy} setFilterBy={setFilterBy} pageName={pageName} />
 
       <nav className="app-header__nav">
-        {/* {console.log('storageDb: ', storageDb)} */}
         <NavLink to="/"><button className="app-header__nav-button icon-home u-icon-center"></button></NavLink>
         <button className="app-header__nav-button icon-refresh u-icon-center"
           onClick={() => localStorage.removeItem(`${storageDb}`)}></button>

@@ -51,6 +51,8 @@ export function MailCompose({ setOnCompose }) {
       return setOnCompose(false)
     }
 
+    if (!newMail.subject) newMail.subject = '(no subject)'
+
     newMail.name = 'Draft'
     newMail.isSent = false
     mailService.save(newMail)
@@ -61,6 +63,8 @@ export function MailCompose({ setOnCompose }) {
 
   function sendEmail(ev) {
     ev.preventDefault()
+
+    if (!newMail.subject) newMail.subject = '(no subject)'
 
     newMail.isDraft = false
     mailService.save(newMail)
