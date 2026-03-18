@@ -55,6 +55,7 @@
 .icon-left-arrow::before { content: 'keyboard_arrow_left'; }
 .icon-reply::before { content: 'reply'; }
 .icon-forward::before { content: 'forward'; }
+.icon-note::before { content: 'note_stack_add'; }
 
 /* Notes */
 .icon-palette::before { content: 'palette'; }

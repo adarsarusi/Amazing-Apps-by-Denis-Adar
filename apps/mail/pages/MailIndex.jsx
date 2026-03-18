@@ -13,13 +13,24 @@ import { utilService } from '../../../services/util.service.js'
 export function MailIndex() {
   const [mails, setMails] = useState(null)
   const [searchParams, setSearchParams] = useSearchParams()
-  const [onCompose, setOnCompose] = useState(false)
+  const [onCompose, setOnCompose] = useState(searchParams.get('onCompose') === 'true')
   const [onDetails, setOnDetails] = useState(false)
+  const [draftId, setDraftId] = useState(null)
   const [selectedMailId, setSelectedMailId] = useState(null)
   const [filterBy, setFilterBy] = useState(mailService.getFilterFromSearchParams(searchParams))
 
-
   const folderName = searchParams.get('folder')
+
+  function setOnComposeParams() {
+    const params = new URLSearchParams(searchParams)
+    params.set('onCompose', String(onCompose))
+    setSearchParams(params)
+  }
+
+  function onDraftEdit(id) {
+    setDraftId(id)
+    setOnCompose(true)
+  }
 
   useEffect(() => {
     loadMails()
@@ -28,7 +39,12 @@ export function MailIndex() {
 
   useEffect(() => {
     setSearchParams({ folder: 'isInbox' })
+    setOnCompose(searchParams.get('onCompose') === 'true')
   }, [])
+
+  useEffect(() => {
+    setOnComposeParams()
+  }, [onCompose])
 
 
   function loadMails() {
@@ -45,9 +61,13 @@ export function MailIndex() {
             mailService.remove(mailId).then(loadMails)
             return
           } else {
-            if (mail.isInbox) mail.isInbox = !mail.isInbox
-            if (mail.isSent) mail.isSent = !mail.isSent
-            if (mail.isDraft) (mail.isDraft = !mail.isDraft)
+            if (mail.isInbox) mail.isInbox = false
+            if (mail.isSent) mail.isSent = false
+            if (mail.isDraft) mail.isDraft = false
+            if (mail.isStarred) mail.isStarred = false
+            if (mail.isImportant) mail.isImportant = false
+            if (mail.isDraft) mail.isDraft = false
+            if (mail.isArchive) mail.isArchive = false
             mail.isTrash = !mail.isTrash
           }
         }
@@ -85,11 +105,14 @@ export function MailIndex() {
   return (
     <section className='mail-index'>
 
-      {onCompose && < MailCompose setOnCompose={setOnCompose} />}
+      {onCompose && < MailCompose
+        setOnCompose={setOnCompose}
+        draftId={draftId}
+        setDraftId={setDraftId}
+        onAction={onMailAction} />}
 
       {onDetails && < MailDetails
         onAction={onMailAction}
-
         folderName={folderName}
         selectedMailId={selectedMailId}
         setOnDetails={setOnDetails}
@@ -111,7 +134,9 @@ export function MailIndex() {
         onAction={onMailAction}
         setOnDetails={setOnDetails}
         setSelectedMailId={setSelectedMailId}
+        onDraftEdit={onDraftEdit}
         searchParams={searchParams}
+        folderName={folderName}
         setSearchParams={setSearchParams} />}
     </section>
   )

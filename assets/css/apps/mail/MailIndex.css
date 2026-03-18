@@ -1,5 +1,6 @@
  /* mail index  */
  .mail-index {
+     height: 100vh;
      overflow: hidden;
      display: grid;
      grid-template-columns: 15rem 1fr;
@@ -26,18 +27,28 @@
      .mail-container {
          grid-area: main;
          align-self: start;
+         overflow: hidden;
+         margin-inline-end: 3em;
      }
 
      .mail-details {
          grid-area: main;
+         overflow-y: auto;
+         overflow-x: hidden;
          align-self: start;
+         height: 85vh;
+         padding-block-end: 3em;
+
+         margin-inline-end: 3em;
      }
 
      .mail-container__list {
          overflow-y: auto;
          overflow-x: hidden;
+         align-self: start;
          height: 85vh;
          padding-block-end: 3em;
+
      }
 
      .mail-compose__button {
@@ -45,6 +56,5 @@
          justify-self: start;
      }
 
-
-     background-color: var(--color-primary-50);
+     background-color: var(--color-primary-100);
  }
