@@ -38,7 +38,7 @@ export function MailFolderList({ filterBy, setFilterBy, mails, setOnCompose }) {
 
     mailService.query({ folder: 'isDraft' })
       .then(draftMails => {
-        const draftCount = draftMails.filter(mail => !mail.isDraft).length
+        const draftCount = draftMails.filter(mail => mail.isDraft).length
         setMailCount(prevCounts => ({ ...prevCounts, draftCount }))
       })
   }
@@ -47,7 +47,7 @@ export function MailFolderList({ filterBy, setFilterBy, mails, setOnCompose }) {
     <React.Fragment>
       <button className='mail-compose__button icon-edit u-icon-center'
         onClick={() => setOnCompose(true)}>Compose</button>
-      <section className='mail-folder-list'>
+      <section className='mail-folder-list minimal-scrollbar'>
         <ul>
           {folderList.map(folder => (
             <li key={folder.name}>

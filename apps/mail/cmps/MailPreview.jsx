@@ -1,7 +1,9 @@
 import { utilService } from '../../../services/util.service.js'
 
 
-export function MailPreview({ mail, onAction }) {
+export function MailPreview({ mail, onAction, setOnDetails, setSelectedMailId, setSearchParams }) {
+
+
   return (
     <div className={`mail-preview ${mail.isRead ? 'isRead' : ''}`}>
       <p className={`mail-preview__name ${mail.name === 'Draft' ? 'isDraft' : ''}`}>{mail.name}</p>
@@ -14,18 +16,18 @@ export function MailPreview({ mail, onAction }) {
       <div className="mail-preview__actions">
         <div className='mail-preview__actions__left'>
           <button
-            className={`mail-actions__button ${mail.isStarred ? 'icon-fill-starred' : 'icon-starred'}`}
+            className={`mail-preview__button mail-action-btn ${mail.isStarred ? 'icon-fill-starred' : 'icon-starred'}`}
             onClick={() => onAction(mail.id, 'starred')}>
           </button>
           <button
-            className={`mail-actions__button ${mail.isImportant ? 'icon-fill-important' : 'icon-important'}`}
+            className={`mail-preview__button mail-action-btn ${mail.isImportant ? 'icon-fill-important' : 'icon-important'}`}
             onClick={() => onAction(mail.id, 'important')}>
           </button>
         </div>
         <div className='mail-preview__actions__right'>
-          <button className='mail-actions__button icon-archive' onClick={() => onAction(mail.id, 'archive')}></button>
-          <button className='mail-actions__button icon-trash' onClick={() => onAction(mail.id, 'remove')}></button>
-          <button className={`mail-actions__button ${mail.isRead ? 'icon-unread' : 'icon-read'}`} onClick={() => onAction(mail.id, 'read')}></button>
+          <button className='mail-preview__button icon-archive mail-action-btn' onClick={() => onAction(mail.id, 'archive')}></button>
+          <button className='mail-preview__button icon-trash mail-action-btn' onClick={() => onAction(mail.id, 'remove')}></button>
+          <button className={`mail-preview__button mail-action-btn ${mail.isRead ? 'icon-unread' : 'icon-read'}`} onClick={() => onAction(mail.id, 'read')}></button>
         </div>
 
       </div>
@@ -66,5 +68,5 @@ function _formatPreviewDate(date) {
     return d + '/' + m + '/' + y
   }
 
-  return evDay + ' ' + evMonthName + '.'
+  return evMonthName + ' ' + evDay
 }

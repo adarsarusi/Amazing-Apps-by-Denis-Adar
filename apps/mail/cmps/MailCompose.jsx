@@ -2,19 +2,18 @@ import { mailService } from "../services/mail.service.js"
 import { utilService } from "../../../services/util.service.js"
 
 const { useState, useEffect } = React
-const { Link, useParams } = ReactRouterDOM
+const { Link, useParams, useSearchParams } = ReactRouterDOM
 
 
-export function MailCompose({ state = null, setOnCompose }) {
+export function MailCompose({ setOnCompose, onAction, draftId, setDraftId }) {
 
   const [newMail, setNewMail] = useState(mailService.getEmptyMail)
-  const params = useParams()
 
   useEffect(() => {
-    if (params.id)
-      mailService.get(params.id)
+    if (draftId)
+      mailService.get(draftId)
         .then(setNewMail)
-  }, [params.id])
+  }, [])
 
   function handleChange({ target }) {
     const { name: prop, type } = target
@@ -37,9 +36,12 @@ export function MailCompose({ state = null, setOnCompose }) {
     }
   }
 
-  function deleteDraftCondition() {
-    if (newMail.id)
-      () => onAction(newMail.id, 'remove')
+  function deleteDraftCondition(draftId) {
+    if (draftId) {
+      onAction(draftId, 'remove')
+      setOnCompose(false)
+      setDraftId(null)
+    }
     else {
       setOnCompose(false)
     }
@@ -64,6 +66,16 @@ export function MailCompose({ state = null, setOnCompose }) {
   function sendEmail(ev) {
     ev.preventDefault()
 
+    if (draftId) {
+      newMail.name = 'Meat Team (Un-Draft)'
+      newMail.isDraft = false
+      newMail.isSent = true
+      mailService.save(newMail)
+        .then(() => {
+          setOnCompose(false)
+        })
+    }
+
     if (!newMail.subject) newMail.subject = '(no subject)'
 
     newMail.isDraft = false
@@ -85,23 +97,21 @@ export function MailCompose({ state = null, setOnCompose }) {
 
   return (
     <section className="mail-compose">
-
-
       <div className="mail-compose__header">
         <p className="mail-compose__title">New Message</p>
         <div className="mail-compose__actions">
           <button type="button"
-            className="mail-compose__action-btn mail-compose__action-btn--header icon-minimize u-icon-center"
-            onClick={() => deleteDraftCondition()}>
+            className="mail-compose__action-btn icon-minimize mail-action-btn"
+          >
           </button>
 
           <button type="button"
-            className="mail-compose__action-btn mail-compose__action-btn--header icon-maximize u-icon-center"
-            onClick={() => deleteDraftCondition()}>
+            className="mail-compose__action-btn icon-maximize mail-action-btn"
+          >
           </button>
 
           <button type="button"
-            className="mail-compose__action-btn mail-compose__action-btn--header icon-close u-icon-center"
+            className="mail-compose__action-btn icon-close mail-action-btn"
             onClick={() => saveDraft()}>
           </button>
         </div>
@@ -168,8 +178,8 @@ export function MailCompose({ state = null, setOnCompose }) {
           </div>
 
           <button type="button"
-            className="mail-compose__action-btn mail-compose__action-btn--footer icon-trash u-icon-center"
-            onClick={() => deleteDraftCondition()}>
+            className="mail-compose__action-btn icon-trash mail-action-btn"
+            onClick={() => deleteDraftCondition(draftId)}>
           </button>
         </div>
 

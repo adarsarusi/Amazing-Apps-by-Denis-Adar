@@ -4,7 +4,7 @@
     gap: 1rem;
 
     height: 3.5rem;
-    min-width: 8ch;
+    min-width: 8em;
 
     border-radius: 1rem;
     padding: 1em 1.5em;
@@ -26,7 +26,7 @@
 .mail-compose {
     z-index: 100;
     position: fixed;
-    right: 2rem;
+    right: 3rem;
     bottom: 0;
 
     display: grid;
@@ -134,9 +134,7 @@
     align-items: center;
     gap: 0.5rem;
 
-    width: 5rem;
-    height: 2rem;
-
+    padding: 0.5em 1em;
     border-radius: 1rem;
     color: var(--white0);
     background-color: var(--color-primary-1000);
@@ -144,24 +142,8 @@
 
 .mail-compose__action-btn {
 
-    display: inline-grid;
-    align-items: center;
-    justify-content: center;
-    justify-self: end;
+    font-size: 1.1rem;
 
-    font-size: 1rem;
-
-    width: 1.5rem;
-    height: 1.5rem;
-
-    text-align: center;
-    align-items: center;
-
-    &:hover {
-        background-color: var(--color-neutral-300);
-    }
-
-    border-radius: 50%;
-    padding: 0.5em;
-    color: var(--color-neutral-600);
+    width: 2rem;
+    height: 2rem;
 }

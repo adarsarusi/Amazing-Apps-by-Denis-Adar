@@ -11,7 +11,7 @@ export const utilService = {
   toCap,
   makeRandomUsers,
   makeDate,
-  trimObj
+  trimObj,
 }
 
 function saveToStorage(key, val) {

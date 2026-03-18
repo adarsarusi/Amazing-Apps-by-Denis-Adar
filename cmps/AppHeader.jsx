@@ -46,7 +46,7 @@ export function AppHeader({ filterBy, setFilterBy }) {
         <nav className="app-header__apps">
           <NavLink to="/mail"> <button className="app-header__app-button">
             <img className="app-header__app-icon" src="assets/images/logos/logo-icons/logo-icon-mail.png" alt="" />
-            Ms. mail
+            Mr. mail
           </button></NavLink>
           <NavLink to="/note"> <button className="app-header__app-button">
             <img className="app-header__app-icon" src="assets/images/logos/logo-icons/logo-icon-note.png" alt="" />
