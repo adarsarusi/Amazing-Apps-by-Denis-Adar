@@ -30,9 +30,8 @@ export function NoteIndex() {
     const navigate = useNavigate()
 
     const dataToPass = {
-        id: 123,
-        title: 'Example Item',
-        details: 'This is some data from the first page.'
+        subject: 'Example Item',
+        body: 'This is some data from the first page.'
     }
 
     const handleNavigation = () => {
@@ -42,23 +41,23 @@ export function NoteIndex() {
     function onSendAsEmail(noteId) {
         noteService.get(noteId)
             .then(note => {
-                dataToPass.name = note.info.title
+                dataToPass.subject = note.info.title
 
                 switch (note.type) {
                     case 'NoteTxt':
-                         dataToPass.details = note.info.txt
+                         dataToPass.body = note.info.txt
                          break
 
                     case 'NoteImg':
-                         dataToPass.details = note.info.url
+                         dataToPass.body = note.info.url
                          break
 
                     case 'NoteVideo':
-                         dataToPass.details = note.info.url
+                         dataToPass.body = note.info.url
                          break
 
                     case 'NoteTodos':
-                         dataToPass.details = note.info.todos
+                         dataToPass.body = note.info.todos
                          break
                 }
                 console.log(dataToPass)

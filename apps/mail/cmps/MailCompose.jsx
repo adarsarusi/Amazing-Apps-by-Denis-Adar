@@ -5,7 +5,7 @@ const { useState, useEffect } = React
 const { Link, useParams, useSearchParams } = ReactRouterDOM
 
 
-export function MailCompose({ setOnCompose, onAction, draftId, setDraftId }) {
+export function MailCompose({ state = null, setOnCompose, onAction, draftId, setDraftId }) {
 
   const [newMail, setNewMail] = useState(mailService.getEmptyMail)
 
@@ -127,40 +127,25 @@ export function MailCompose({ setOnCompose, onAction, draftId, setDraftId }) {
             type="email"
             name="to"
           />
-          {!state &&
-            <input
-              className="mail-compose__input"
-              value={subject}
-              onChange={handleChange}
-              placeholder="Subject"
-              type="text"
-              name="subject"
-            />}
-          {state &&
-            <input
-              className="mail-compose__input"
-              value={state.name}
-              onChange={handleChange}
-              placeholder="Subject"
-              type="text"
-              name="subject"
-            />}
-          {!state &&
-            <textarea
-              className="mail-compose__textarea"
-              value={body}
-              onChange={handleChange}
-              type="text"
-              name="body"
-            />}
-          {state &&
-            <textarea
-              className="mail-compose__textarea"
-              value={state.details}
-              onChange={handleChange}
-              type="text"
-              name="body"
-            />}
+
+          <input
+            className="mail-compose__input"
+            value={subject}
+            onChange={handleChange}
+            placeholder="Subject"
+            type="text"
+            name="subject"
+          />
+
+
+          <textarea
+            className="mail-compose__textarea"
+            value={body}
+            onChange={handleChange}
+            type="text"
+            name="body"
+          />
+
         </div>
 
         <div className="mail-compose__footer">
