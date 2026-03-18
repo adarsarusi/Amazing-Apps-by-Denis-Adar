@@ -30,12 +30,19 @@ export function NoteIndex() {
     const navigate = useNavigate()
 
     const dataToPass = {
+        name:'Meat TeaM (NOTE)',
         subject: 'Example Item',
-        body: 'This is some data from the first page.'
+        body: 'This is some data from the first page.',
+        isDraft: true,
+        isSent: true,
+        attachments: {
+            isHeld: false,
+            files: [],
+        },
     }
 
     const handleNavigation = () => {
-        navigate('/mail/', { state: dataToPass })
+        navigate('/mail?onCompose=true', { state: dataToPass })
     }
 
     function onSendAsEmail(noteId) {
@@ -45,20 +52,20 @@ export function NoteIndex() {
 
                 switch (note.type) {
                     case 'NoteTxt':
-                         dataToPass.body = note.info.txt
-                         break
+                        dataToPass.body = note.info.txt
+                        break
 
                     case 'NoteImg':
-                         dataToPass.body = note.info.url
-                         break
+                        dataToPass.body = note.info.url
+                        break
 
                     case 'NoteVideo':
-                         dataToPass.body = note.info.url
-                         break
+                        dataToPass.body = note.info.url
+                        break
 
                     case 'NoteTodos':
-                         dataToPass.body = note.info.todos
-                         break
+                        dataToPass.body = note.info.todos
+                        break
                 }
                 console.log(dataToPass)
                 handleNavigation()

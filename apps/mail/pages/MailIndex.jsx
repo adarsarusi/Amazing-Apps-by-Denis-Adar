@@ -16,7 +16,7 @@ export function MailIndex() {
   const [onCompose, setOnCompose] = useState(searchParams.get('onCompose') === 'true')
   const [onDetails, setOnDetails] = useState(false)
   const [draftId, setDraftId] = useState(null)
-  const [selectedMailId, setSelectedMailId] = useState(null)
+  const [getNotes, setGetNotes] = useState(null)
   const [filterBy, setFilterBy] = useState(mailService.getFilterFromSearchParams(searchParams))
 
   const folderName = searchParams.get('folder')
@@ -33,7 +33,14 @@ export function MailIndex() {
   }
 
   const location = useLocation()
-  const { state } = location || {}
+  const { state } = location
+
+  useEffect(() => {
+    if (state) {
+      setGetNotes(state)
+    }
+  }, [state])
+
 
   useEffect(() => {
     loadMails()
@@ -112,12 +119,12 @@ export function MailIndex() {
         setOnCompose={setOnCompose}
         draftId={draftId}
         setDraftId={setDraftId}
+        getNotes={getNotes}
         onAction={onMailAction} />}
 
       {onDetails && < MailDetails
         onAction={onMailAction}
         folderName={folderName}
-        selectedMailId={selectedMailId}
         setOnDetails={setOnDetails}
         searchParams={searchParams}
         setSearchParams={setSearchParams} />}
@@ -136,7 +143,6 @@ export function MailIndex() {
         mails={mails}
         onAction={onMailAction}
         setOnDetails={setOnDetails}
-        setSelectedMailId={setSelectedMailId}
         onDraftEdit={onDraftEdit}
         searchParams={searchParams}
         folderName={folderName}

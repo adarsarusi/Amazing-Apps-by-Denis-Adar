@@ -5,7 +5,7 @@ const { useState, useEffect } = React
 const { Link, useParams, useSearchParams } = ReactRouterDOM
 
 
-export function MailCompose({ state = null, setOnCompose, onAction, draftId, setDraftId }) {
+export function MailCompose({ getNotes, setOnCompose, onAction, draftId, setDraftId }) {
 
   const [newMail, setNewMail] = useState(mailService.getEmptyMail)
 
@@ -13,6 +13,11 @@ export function MailCompose({ state = null, setOnCompose, onAction, draftId, set
     if (draftId)
       mailService.get(draftId)
         .then(setNewMail)
+  }, [])
+
+  useEffect(() => {
+    if (getNotes)
+      setNewMail(getNotes)
   }, [])
 
   function handleChange({ target }) {
