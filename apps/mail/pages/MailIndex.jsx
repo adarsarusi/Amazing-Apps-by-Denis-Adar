@@ -137,6 +137,7 @@ export function MailIndex() {
         draftId={draftId}
         setDraftId={setDraftId}
         getNotes={getNotes}
+        setGetNotes={setGetNotes}
         onAction={onMailAction} />}
 
       {onDetails && < MailDetails
