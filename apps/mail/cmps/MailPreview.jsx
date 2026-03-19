@@ -27,7 +27,7 @@ export function MailPreview({ mail, onAction }) {
           </button>
         </div>
         <div className='mail-preview__actions__right'>
-          <button className='mail-preview__button icon-archive mail-action-btn' onClick={() => onAction(mail.id, 'archive')}></button>
+          <button className='mail-preview__button icon-archived mail-action-btn' onClick={() => onAction(mail.id, 'archive')}></button>
           <button className='mail-preview__button icon-trash mail-action-btn' onClick={() => onAction(mail.id, 'remove')}></button>
           <button className={`mail-preview__button mail-action-btn ${mail.isRead ? 'icon-unread' : 'icon-read'}`} onClick={() => onAction(mail.id, 'read')}></button>
         </div>

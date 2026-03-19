@@ -71,7 +71,7 @@ export function MailDetails({
           <button onClick={() => backFromDetails()} className='mail-details__button-back icon-back mail-action-btn'></button>
         </div>
         <div className='mail-details__actions-center'>
-          <button className='mail-details__button icon-archive mail-action-btn' onClick={() => onActionBackFromDetails(mail.id, 'archive')}></button>
+          <button className='mail-details__button icon-archived mail-action-btn' onClick={() => onActionBackFromDetails(mail.id, 'archive')}></button>
           <button className='mail-details__button icon-spam mail-action-btn' onClick={() => onActionBackFromDetails(mail.id, 'spam')}></button>
           <button className='mail-details__button icon-trash mail-action-btn' onClick={() => onActionBackFromDetails(mail.id, 'remove')}></button>
           <button className={`mail-details__button mail-action-btn ${mail.isRead ? 'icon-unread' : 'icon-read'}`} onClick={() => onActionBackFromDetails(mail.id, 'read')}></button>

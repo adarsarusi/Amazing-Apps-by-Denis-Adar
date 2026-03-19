@@ -13,7 +13,7 @@ export const mailService = {
 
 const loggedInUser = {
   email: 'support@meatteam.com',
-  fullname: 'Meat Team',
+  fullName: 'Meat Team',
 }
 
 const MAIL_KEY = 'mailDB'
@@ -160,7 +160,7 @@ function getFilterFromSearchParams(searchParams) {
 function getEmptyMail() {
   return {
     from: loggedInUser.email,
-    name: loggedInUser.fullname,
+    name: loggedInUser.fullName,
     to: '',
     createdAt: '',
     subject: '',
@@ -210,19 +210,25 @@ function _createMails(amount) {
       labels: lbls[utilService.getRandomIntInclusive(0, 5)],
       isInbox: true,
       isTrash: false,
-      isRead: Math.random() < 0.7,
+      isRead: Math.random() < 0.5,
       isStarred: Math.random() < 0.2,
-      isSent: Math.random() < 0.3,
+      isSent: Math.random() < 0.1,
       isImportant: Math.random() < 0.3,
       isSpam: false,
-      isArchived: Math.random() < 0.2,
+      isArchived: Math.random() < 0.1,
       isDraft: false,
       attachments: {
         isHeld: Math.random() < 0.2,
         files: [],
       },
     }
-    if (mail.isSent) mail.isInbox = false
+
+    if (mail.isSent) {
+      mail.name = loggedInUser.fullName
+      mail.from = loggedInUser.email
+      mail.to = user.email
+      mail.isInbox = false
+    }
     if (mail.isDraft) mail.isInbox = false
     if (mail.isArchived) mail.isInbox = false
 

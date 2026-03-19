@@ -40,10 +40,6 @@ export function NoteEdit({ note = null, onSaveNote, getMail, searchParams, setSe
         return () => window.removeEventListener('click', handleClickOutside)
     }, [isNoting])
 
-    useEffect(() => {
-        setIsNoting(searchParams.get('isNoting') === 'true')
-    }, [])
-
     function handleChange(ev) {
         const { name, value } = ev.target
 
