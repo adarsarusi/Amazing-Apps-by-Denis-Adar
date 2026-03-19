@@ -1,33 +1,50 @@
  /* home */
 
-.home {
-    background-color: var(--bg2);
-}
+ .home {
+     background-color: var(--bg2);
+ }
 
-.home .box-container {
-    padding: 1em 0;
-}
+ .home .box-container {
+     display: flex;
+     justify-content: center;
+     align-items: top;
 
-.home .box1 {
-    background-color: var(--color1);
-    min-height: 10em;
-}
+     width: 100%;
+     height: 100%;
+     background-image: url("/assets/images/bg/meat-team-bg.jpg");
+     background-size: cover;
 
-.home .box2 {
-    background-color: var(--color2);
-    min-height: 10em;
-}
+     h1 {
+         color: white;
+         margin-block-start: 8rem;
+         font-size: 10rem;
+         text-align: center;
+     }
+ }
+
+
+ .home .box1 {
+     background-color: var(--color1);
+     min-height: 10em;
+ }
+
+ .home .box2 {
+     background-color: var(--color2);
+     min-height: 10em;
+ }
 
  @media (min-width: 750px) {
-    .home .box-container {
-        display: flex;
-        flex-direction: row-reverse;
-    }
-    .home .box1 {
-        flex: 1
-    }
-    .home .box2 {
-        width: 30vw;
-    }
-    
-}
+     .home .box-container {
+         display: flex;
+         flex-direction: row-reverse;
+     }
+
+     .home .box1 {
+         flex: 1
+     }
+
+     .home .box2 {
+         width: 30vw;
+     }
+
+ }
