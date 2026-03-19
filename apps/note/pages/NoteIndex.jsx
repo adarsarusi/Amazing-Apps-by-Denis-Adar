@@ -70,7 +70,7 @@ export function NoteIndex() {
                         break
 
                     case 'NoteTodos':
-                        dataToPass.body = note.info.todos
+                        dataToPass.body = JSON.stringify(note.info.todos)
                         break
                 }
                 navigate('/mail?onCompose=true', { state: dataToPass })
