@@ -1,7 +1,7 @@
 import { utilService } from '../../../services/util.service.js'
 
 
-export function MailPreview({ mail, onAction}) {
+export function MailPreview({ mail, onAction }) {
 
 
   return (
@@ -12,7 +12,9 @@ export function MailPreview({ mail, onAction}) {
         <span className="mail-preview__hyphen">-</span>
         <span className="mail-preview__body">{mail.body}</span>
       </p>
-      <p className="mail-preview__date">{_formatPreviewDate(mail.createdAt)}</p>
+      <p className="mail-preview__date">{_formatPreviewDate(mail.createdAt)}
+        <span className={`${mail.attachments.isHeld ? 'icon-attachment' : ''}`}></span>
+      </p>
       <div className="mail-preview__actions">
         <div className='mail-preview__actions__left'>
           <button

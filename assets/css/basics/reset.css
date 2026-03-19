@@ -63,6 +63,7 @@ textarea,
 select {
   max-width: 100%;
   font: inherit;
+  color: inherit;
 }
 
 button {
@@ -77,4 +78,10 @@ button {
   border: none;
   color: inherit;
   font: inherit;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px rgba(153, 153, 153, 0.068) inset;
+  -webkit-text-fill-color: var(--black0);
+  padding: 0.5em;
 }

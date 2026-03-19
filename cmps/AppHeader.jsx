@@ -4,6 +4,9 @@ const { useParams, useLocation } = ReactRouterDOM
 const { Link, NavLink } = ReactRouterDOM
 
 import { MailFilter } from "../apps/mail/cmps/MailFilter.jsx"
+import { utilService } from "../services/util.service.js"
+import { showSuccessMsg } from '../services/event-bus.service.js'
+
 
 export function AppHeader({ filterBy, setFilterBy }) {
 
@@ -18,6 +21,15 @@ export function AppHeader({ filterBy, setFilterBy }) {
   function openAppsDrawer(state) {
     inputRef.current = stateApps
     setStateApps(state)
+  }
+
+  function localStorageRefresh() {
+    const name = pageName.replace('/', '')
+    localStorage.removeItem(`${storageDb}`)
+    showSuccessMsg(`${utilService.toCap(name)} storage refreshed.`)
+    setTimeout(() => {
+      window.location.reload()
+    }, 1000);
   }
 
   document.addEventListener("keydown", (event) => {
@@ -36,8 +48,8 @@ export function AppHeader({ filterBy, setFilterBy }) {
 
       <nav className="app-header__nav">
         <NavLink to="/"><button className="app-header__nav-button icon-home u-icon-center"></button></NavLink>
-        <button className="app-header__nav-button icon-refresh u-icon-center"
-          onClick={() => localStorage.removeItem(`${storageDb}`)}></button>
+        {pageName !== '/' && <button className="app-header__nav-button icon-refresh u-icon-center"
+          onClick={() => localStorageRefresh()}></button>}
         <button onClick={() => openAppsDrawer(inputRef.current)} className="app-header__nav-button icon-apps u-icon-center"></button>
         <button className="app-header__nav-button icon-account u-icon-center"></button>
       </nav>
@@ -77,7 +89,7 @@ function _onAppChange(pageName) {
     return { appLogo: appLogos.mrMail, storageDb: 'mailDB' }
   }
   else if (pageName.includes('/note')) {
-    return { appLogo: appLogos.msNote, storageDb: 'noteDB' }
+    return { appLogo: appLogos.msNote, storageDb: 'noteDB', }
   }
   else {
     return { appLogo: appLogos.meatTeam, storageDb: '' }

@@ -1,11 +1,17 @@
-import { mailService } from "../services/mail.service.js"
-import { utilService } from "../../../services/util.service.js"
-
 const { useState, useEffect } = React
 const { Link, useParams, useSearchParams } = ReactRouterDOM
 
+import { mailService } from "../services/mail.service.js"
+import { showSuccessMsg } from '../services/event-bus.service.js'
 
-export function MailCompose({ getNotes, setOnCompose, onAction, draftId, setDraftId }) {
+
+export function MailCompose({
+  setGetNotes,
+  getNotes,
+  setOnCompose,
+  onAction,
+  draftId,
+  setDraftId }) {
 
   const [newMail, setNewMail] = useState(mailService.getEmptyMail)
 
@@ -46,6 +52,8 @@ export function MailCompose({ getNotes, setOnCompose, onAction, draftId, setDraf
       onAction(draftId, 'remove')
       setOnCompose(false)
       setDraftId(null)
+      setGetNotes(null)
+      showSuccessMsg('Draft massage moved to Trash.')
     }
     else {
       setOnCompose(false)
@@ -65,6 +73,8 @@ export function MailCompose({ getNotes, setOnCompose, onAction, draftId, setDraf
     mailService.save(newMail)
       .then(() => {
         setOnCompose(false)
+        setGetNotes(null)
+        showSuccessMsg('Draft massage created.')
       })
   }
 
@@ -78,6 +88,8 @@ export function MailCompose({ getNotes, setOnCompose, onAction, draftId, setDraf
       mailService.save(newMail)
         .then(() => {
           setOnCompose(false)
+          setGetNotes(null)
+          showSuccessMsg('Message sent.')
         })
     }
 
@@ -142,7 +154,6 @@ export function MailCompose({ getNotes, setOnCompose, onAction, draftId, setDraf
             name="subject"
           />
 
-
           <textarea
             className="mail-compose__textarea"
             value={body}
@@ -156,19 +167,21 @@ export function MailCompose({ getNotes, setOnCompose, onAction, draftId, setDraf
         <div className="mail-compose__footer">
           <div className="mail-compose__footer-actions">
             <button className="mail-compose__submit-btn">Send
-              <span className="icon-sent u-icon-center"></span>
+              <span className="icon-sent"></span>
             </button>
-            <input
-              className="mail-compose__checkbox"
-              checked={isHeld}
-              onChange={handleChange}
-              type="checkbox"
-              name="attachments.isHeld"
-            />
+            <label className="mail-compose__checkbox">
+              <input
+                checked={isHeld}
+                onChange={handleChange}
+                type="checkbox"
+                name="attachments.isHeld" />
+              <span className="icon-attach_file"></span>
+            </label>
+
           </div>
 
           <button type="button"
-            className="mail-compose__action-btn icon-trash mail-action-btn"
+            className="icon-trash mail-action-btn"
             onClick={() => deleteDraftCondition(draftId)}>
           </button>
         </div>

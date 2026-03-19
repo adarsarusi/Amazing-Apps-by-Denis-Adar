@@ -8,8 +8,11 @@
   --color-primary-400: #c2e7ff;
   --color-primary-1000: #0b57d0;
 
-
-  --color-neutral-100: #ececec;
+  /* hover on light */
+  --color-neutral-100: rgba(60, 64, 67, 0.08);
+  /* hover on dark */
+  --color-neutral-150: rgba(255, 255, 255, 0.078);
+  
   --color-neutral-200: #eaecee;
   --color-neutral-300: #dadce0;
   --color-neutral-400: #64798f;

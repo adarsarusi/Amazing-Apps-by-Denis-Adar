@@ -1,25 +1,64 @@
 .user-msg {
+    z-index: 999;
     position: fixed;
-    bottom: -100px;
-    right: .5em;
-    padding: .5em;
-    background-color: #111;
+    bottom: 1em;
+    left: 1em;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+
+    max-width: 40rem;
+    max-height: 4rem;
+
+    color: var(--white0);
+
+    padding: 1.5em 0.5em 1.5em 1.5em;
+    border: 1px solid var(--clr2);
+    border-radius: 0.5rem;
+    background-color: var(--black0);
+
+    box-shadow: 0 1px 3px 0 rgba(60, 64, 67, .3), 0 4px 8px 3px rgba(60, 64, 67, .15);
+    animation: slideIn 0.4s ease-out forwards;
 }
 
-.user-msg.open {
-    bottom: .8em;
-    transition: bottom .5s;
+.user-msg__icon {
+    font-size: 1.6rem;
+    color: var(--color-neutral-300);
+
+    &:hover {
+        background-color: var(--color-neutral-150);
+    }
 }
 
 .user-msg.success {
-    background-color: var(--color2);
+    border: 1px solid var(--clr2);
+
 }
 
 .user-msg.error {
-    background-color: var(--color3);
+    border: 1px solid var(--clr4);
 }
 
-.user-msg button{
-   float: right;
-   margin-inline-start: 4px;
+
+.user-msg button {
+    float: right;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(200px);
+        opacity: 0;
+    }
+
+    70% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

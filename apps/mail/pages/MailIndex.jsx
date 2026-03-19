@@ -8,6 +8,8 @@ import { AppHeader } from '../../../cmps/AppHeader.jsx'
 import { MailCompose } from '../cmps/MailCompose.jsx'
 import { MailDetails } from '../cmps/MailDetails.jsx'
 import { utilService } from '../../../services/util.service.js'
+import { showSuccessMsg } from '../services/event-bus.service.js'
+
 
 
 export function MailIndex() {
@@ -69,6 +71,7 @@ export function MailIndex() {
         if (action === 'remove') {
           if (mail.isTrash) {
             mailService.remove(mailId).then(loadMails)
+            showSuccessMsg('The mail have been deleted forever.')
             return
           } else {
             if (mail.isInbox) mail.isInbox = false
@@ -79,17 +82,20 @@ export function MailIndex() {
             if (mail.isDraft) mail.isDraft = false
             if (mail.isArchive) mail.isArchive = false
             mail.isTrash = !mail.isTrash
+            showSuccessMsg('Conversation moved to Trash.')
           }
         }
 
         if (action === 'archive') {
           mail.isInbox = !mail.isInbox
           mail.isArchive = !mail.isArchive
+          showSuccessMsg('Conversation archived.')
         }
 
         if (action === 'spam') {
           mail.isInbox = !mail.isInbox
           mail.isSpam = !mail.isSpam
+          showSuccessMsg('Conversation marked as spam..')
         }
 
         if (action === 'starred') {
@@ -101,7 +107,15 @@ export function MailIndex() {
         }
 
         if (action === 'read') {
-          mail.isRead = !mail.isRead
+          if (mail.isRead) {
+            mail.isRead = !mail.isRead
+            showSuccessMsg('Conversation marked as read.')
+          }
+          else {
+            mail.isRead = !mail.isRead
+            showSuccessMsg('Conversation marked as unread.')
+          }
+
         }
 
         mailService.save(mail)
@@ -114,6 +128,10 @@ export function MailIndex() {
 
   return (
     <section className='mail-index'>
+
+      <AppHeader
+        filterBy={filterBy}
+        setFilterBy={setFilterBy} />
 
       {onCompose && < MailCompose
         setOnCompose={setOnCompose}
@@ -128,10 +146,6 @@ export function MailIndex() {
         setOnDetails={setOnDetails}
         searchParams={searchParams}
         setSearchParams={setSearchParams} />}
-
-      <AppHeader
-        filterBy={filterBy}
-        setFilterBy={setFilterBy} />
 
       <MailFolderList
         filterBy={filterBy}

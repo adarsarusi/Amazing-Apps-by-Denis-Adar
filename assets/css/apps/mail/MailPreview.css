@@ -12,7 +12,6 @@
   gap: 1rem;
   min-width: 0;
 
-  font-size: 0.875rem;
   font-weight: 400;
   letter-spacing: normal;
 
@@ -83,11 +82,18 @@
 }
 
 .mail-preview__date {
-  display: grid;
-  justify-items: end;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: end;
+  gap: 1rem;
   width: 100%;
 
-  font-size: 0.75rem;
+  ::before {
+    font-size: 1.2rem;
+    color: var(--color-neutral-400);
+  }
+
+  font-size: 0.85rem;
   padding: 0 0.5em;
 }
 

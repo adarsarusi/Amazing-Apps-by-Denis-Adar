@@ -56,6 +56,8 @@
 .icon-reply::before { content: 'reply'; }
 .icon-forward::before { content: 'forward'; }
 .icon-note::before { content: 'note_stack_add'; }
+.icon-attach_file::before { content: 'attach_file'; }
+.icon-attachment::before { content: 'attachment'; }
 
 /* Notes */
 .icon-palette::before { content: 'palette'; }

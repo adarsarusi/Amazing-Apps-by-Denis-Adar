@@ -67,9 +67,7 @@ export function MailFolderList({ filterBy, setFilterBy, mails, setOnCompose }) {
 }
 
 function MailFolder({ name, filter, handleFolderChange, filterBy: { folder }, mailCount: { draftCount, unreadCount } }) {
-
   const isFolder = folder.toLowerCase().includes(name)
-
   return (
     <a
       onClick={() => handleFolderChange(filter)}

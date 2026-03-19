@@ -9,11 +9,13 @@
     border-radius: 1rem;
     padding: 1em 1.5em;
     margin: 0.5em;
+    margin-inline-start: 1.5em;
     margin-block-end: 1em;
 
     &.icon-edit::before {
         font-size: 1.5rem;
     }
+
 
     &:hover {
         box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
@@ -35,13 +37,14 @@
         "compose-header"
         "compose-form"
         "compose-footer";
-
     min-width: 28rem;
     border-radius: 0.5rem 0.5rem 0 0;
     background-color: var(--white0);
 
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    color: var(--black0);
+
     overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .mail-compose__header {
@@ -72,20 +75,41 @@
 }
 
 .mail-compose__checkbox {
-    & input[type="checkbox" i] {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background-color: transparent;
-        cursor: pointer;
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        border: 0;
-        width: 16px;
-        height: 16px;
+    input {
+        display: none;
     }
+
+    .icon-attach_file {
+        font-size: 1.5em;
+        cursor: pointer;
+        color: inherit;
+        display: inline-grid;
+        align-items: center;
+        justify-content: center;
+        justify-self: end;
+
+        font-size: 1.3rem;
+
+        width: 2em;
+        height: 2em;
+
+        color: inherit;
+        text-align: center;
+        align-items: center;
+
+        &:hover {
+            background-color: var(--color-neutral-100);
+        }
+
+        border-radius: 50%;
+    }
+
+    input:checked+.icon-attach_file {
+        color: var(--color-primary-1000);
+    }
+
 }
+
 
 .mail-compose__input {
     border: 0;
@@ -141,9 +165,7 @@
 }
 
 .mail-compose__action-btn {
-
     font-size: 1.1rem;
-
     width: 2rem;
     height: 2rem;
 }

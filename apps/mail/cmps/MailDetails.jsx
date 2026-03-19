@@ -3,7 +3,11 @@ import { mailService } from "../services/mail.service.js"
 const { useState, useEffect } = React
 const { Link, useParams, useNavigate } = ReactRouterDOM
 
-export function MailDetails({ onAction, folderName, setOnDetails, selectedMailId, setSearchParams, searchParams }) {
+export function MailDetails({
+  onAction,
+  folderName,
+  setOnDetails,
+  searchParams }) {
 
   const [mail, setMail] = useState(null)
 
@@ -23,20 +27,20 @@ export function MailDetails({ onAction, folderName, setOnDetails, selectedMailId
     setOnDetails(false)
   }
 
-  const dataToPass = {
-    createdAt: Date.now(),
-    type: 'NoteTxt',
-    isPinned: false,
-    style: {
-      backgroundColor: '#fff8b8'
-    },
-    info: {
-      title: '',
-      txt: ''
-    }
-  }
-
   function onCreateAsNote(mailId) {
+    const dataToPass = {
+      createdAt: Date.now(),
+      type: 'NoteTxt',
+      isPinned: false,
+      style: {
+        backgroundColor: '#fff8b8'
+      },
+      info: {
+        title: '',
+        txt: ''
+      }
+    }
+
     mailService.get(mailId)
       .then(mail => {
         dataToPass.info.title = mail.subject
@@ -65,6 +69,8 @@ export function MailDetails({ onAction, folderName, setOnDetails, selectedMailId
       <div className='mail-details__actions'>
         <div className='mail-details__actions-left'>
           <button onClick={() => backFromDetails()} className='mail-details__button-back icon-back mail-action-btn'></button>
+        </div>
+        <div className='mail-details__actions-center'>
           <button className='mail-details__button icon-archive mail-action-btn' onClick={() => onActionBackFromDetails(mail.id, 'archive')}></button>
           <button className='mail-details__button icon-spam mail-action-btn' onClick={() => onActionBackFromDetails(mail.id, 'spam')}></button>
           <button className='mail-details__button icon-trash mail-action-btn' onClick={() => onActionBackFromDetails(mail.id, 'remove')}></button>
