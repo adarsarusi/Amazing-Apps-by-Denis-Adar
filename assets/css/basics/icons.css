@@ -36,7 +36,7 @@
 .icon-close::before    { content: 'close'; }
 .icon-settings::before { content: 'settings'; }
 .icon-logout::before { content: 'logout'; }
-.icon-archive::before { content: 'archive'; }
+.icon-archived::before { content: 'archive'; }
 .icon-spam::before { content: 'report'; }
 .icon-draft::before { content: 'draft'; }
 .icon-inbox::before { content: 'inbox'; }
@@ -82,7 +82,7 @@
 .icon-fill-close::before    { content: 'close'; }
 .icon-fill-settings::before { content: 'settings'; }
 .icon-fill-logout::before { content: 'logout'; }
-.icon-fill-archive::before { content: 'archive'; }
+.icon-fill-archived::before { content: 'archive'; }
 .icon-fill-spam::before { content: 'report'; }
 .icon-fill-draft::before { content: 'draft'; }
 .icon-fill-inbox::before { content: 'inbox'; }

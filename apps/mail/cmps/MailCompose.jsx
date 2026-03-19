@@ -72,9 +72,9 @@ export function MailCompose({
     newMail.isSent = false
     mailService.save(newMail)
       .then(() => {
+        showSuccessMsg('Draft massage auto saved.')
         setOnCompose(false)
         setGetNotes(null)
-        showSuccessMsg('Draft massage created.')
       })
   }
 
@@ -89,8 +89,7 @@ export function MailCompose({
         .then(() => {
           setOnCompose(false)
           setGetNotes(null)
-          showSuccessMsg('Message sent.')
-        })
+        }).finally()
     }
 
     if (!newMail.subject) newMail.subject = '(no subject)'
@@ -99,6 +98,7 @@ export function MailCompose({
     mailService.save(newMail)
       .then(() => {
         setOnCompose(false)
+        showSuccessMsg('Message sent.')
       })
   }
 

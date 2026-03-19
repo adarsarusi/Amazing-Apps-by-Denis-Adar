@@ -79,8 +79,7 @@ export function MailIndex() {
             if (mail.isDraft) mail.isDraft = false
             if (mail.isStarred) mail.isStarred = false
             if (mail.isImportant) mail.isImportant = false
-            if (mail.isDraft) mail.isDraft = false
-            if (mail.isArchive) mail.isArchive = false
+            if (mail.isArchived) mail.isArchive = false
             mail.isTrash = !mail.isTrash
             showSuccessMsg('Conversation moved to Trash.')
           }

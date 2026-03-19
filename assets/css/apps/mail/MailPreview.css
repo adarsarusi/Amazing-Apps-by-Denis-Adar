@@ -52,6 +52,10 @@
       font-weight: var(--bold);
     }
 
+    ::before {
+      font-weight: normal;
+    }
+
   }
 
   &.isRead {

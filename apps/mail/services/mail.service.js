@@ -207,25 +207,30 @@ function _createMails(amount) {
       createdAt: utilService.makeDate(),
       body: utilService.makeLorem(100),
       pageCount: utilService.getRandomIntInclusive(20, 600),
-      labels: lbls[utilService.getRandomIntInclusive[(0, 5)]],
+      labels: lbls[utilService.getRandomIntInclusive(0, 5)],
       isInbox: true,
       isTrash: false,
       isRead: Math.random() < 0.7,
-      isStared: false,
-      isSent: false,
+      isStarred: Math.random() < 0.2,
+      isSent: Math.random() < 0.3,
       isImportant: Math.random() < 0.3,
       isSpam: false,
       isArchived: Math.random() < 0.2,
       isDraft: false,
       attachments: {
-        isHeld: Math.random() < 0.7,
+        isHeld: Math.random() < 0.2,
         files: [],
       },
     }
+    if (mail.isSent) mail.isInbox = false
+    if (mail.isDraft) mail.isInbox = false
+    if (mail.isArchived) mail.isInbox = false
+
     mails.push(mail)
   }
   utilService.saveToStorage(MAIL_KEY, mails)
 }
+
 
 
 

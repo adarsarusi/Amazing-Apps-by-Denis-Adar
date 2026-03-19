@@ -10,7 +10,7 @@ const folderList = [
   { name: 'important', filter: 'isImportant' },
   { name: 'sent', filter: 'isSent' },
   { name: 'draft', filter: 'isDraft' },
-  { name: 'archive', filter: 'isArchive' },
+  { name: 'archived', filter: 'isArchived' },
   { name: 'trash', filter: 'isTrash' },
   { name: 'spam', filter: 'isSpam' },
 ]
